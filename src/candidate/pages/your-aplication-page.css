@@ -1,0 +1,153 @@
+/* Estilos para la página de búsqueda de empleo */
+.applications-page {
+  display: flex;
+}
+
+/* Estilos para la barra lateral */
+.applications-sidebar {
+  /* Ajusta los estilos de la barra lateral aquí */
+  width: 20rem;
+}
+
+.applications-sidebar__logo {
+  /* Estilos para el logo */
+}
+
+.applications-sidebar__navigation {
+  /* Estilos para la navegación */
+}
+
+.applications-sidebar__link {
+  /* Estilos comunes para los enlaces */
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+.applications-main {
+  padding: 3.2rem 0rem 0rem 12rem;
+  background: #F5F5F6;
+}
+.applications-main__container {
+  padding: 0.8rem;
+}
+.applications-header {
+}
+.applications-header__title {
+}
+.applications-header__filters {
+  display: flex;
+  align-items: center;
+}
+.job-posting-page__filter-input {
+  margin-right: 0.4rem;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #fff;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+}
+.job-posting-page__filter-input:checked {
+  border-color: #f48fb1;
+}
+
+.job-posting-page__filter-input:checked::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background-color: #f48fb1;
+  border-radius: 50%;
+}
+
+.applications-filter__label {
+  margin-bottom: 0;
+  margin-right: 1.2rem;
+}
+.applications-list {
+  padding: 0.8rem;
+}
+.applications-list__count {
+}
+.application-card {
+  background-color: white;
+  border: 1px solid #e1e2e1;
+  box-shadow: 0px 2px 8px 0px #00000033;
+  width: 94.4rem;
+  height: 9.6rem;
+  padding: 1.6rem;
+  border-radius: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.application-card__header {
+  display: flex;
+}
+.application-card__logo {
+  margin-right: 1.6rem;
+  width: 6.4rem;
+  object-fit: contain;
+}
+.application__job-title {
+}
+.application__company-name {
+  font-family: "Montserrat";
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.8rem;
+  letter-spacing: 0.1px;
+  text-align: left;
+  color: #616161;
+
+}
+
+.application__details{
+font-family: "Inter";
+font-size: 12px;
+font-weight: 400;
+line-height: 16px;
+letter-spacing: 0.4000000059604645px;
+text-align: left;
+color: #8E8E8E;
+
+}
+.application__status {
+  display: flex;
+}
+.application__status-time {
+  font-family: "Inter";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.4px;
+  text-align: center;
+  color: #616161;
+  width: 8rem;
+  text-align: center;
+}
+.application__status-review{
+
+  font-family: "Inter";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.4px;
+  text-align: center;
+  color: #F48FB1;
+  width: 8rem;
+  text-align: center;
+
+}
