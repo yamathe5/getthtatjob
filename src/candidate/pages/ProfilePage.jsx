@@ -6,7 +6,16 @@ export default function Profile() {
   const { currentUser } = useAuth();
   const [inputs, setinputs] = useState(currentUser);
 
-  function handleOnChangeInput(e, field) {
+  const dateForInput = new Date(inputs.birthdate).toISOString().split("T")[0];
+  // const handleDateChange = (event) => {
+  //   const newDate = new Date(event.target.value);
+  //   const isoDateToSend = newDate.toISOString();
+  //   // Actualizar el estado o enviar la fecha a la API
+  //   setDate(isoDateToSend);
+  // };
+
+
+    function handleOnChangeInput(e, field) {
     setinputs((prev) => ({
       ...prev,
       [field]: e.target.value,
@@ -60,9 +69,11 @@ export default function Profile() {
                 birthdate
               </label>
               <input
-                type="birthdate"
+                type="date"
                 id="birthdate"
                 className="profile-form__input input mb-8"
+                value={dateForInput}
+                onChange={(e) => handleOnChangeInput(e, "birthdate")}
               />
               <label htmlFor="linkedin" className="profile-form__label label">
                 linkedin
