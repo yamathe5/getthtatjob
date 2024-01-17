@@ -1,0 +1,68 @@
+.company-profile-page{
+    display: flex;
+
+}
+.company-profile-sidebar{
+    width: 20rem;
+
+}
+.company-profile-sidebar__logo{
+    
+}
+.company-profile-sidebar__navigation{
+    
+}
+.company-profile-sidebar__link{
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    text-align: left;
+
+}
+.company-profile-sidebar__link--active{
+    
+}
+.company-profile-sidebar__link--logout{
+    
+}
+.company-profile-main{
+    padding: 3.2rem 0rem 0rem 12rem;
+    background: #F5F5F6;
+    width: 100%;
+}
+.company-profile-header{
+    
+}
+.company-profile-header__title{
+        /* Estilos para el título */
+  font-family: "Montserrat", sans-serif;
+  font-size: 3.4rem;
+  font-weight: 400;
+  line-height: 4.1rem;
+  letter-spacing: 0.25px;
+  text-align: left;
+
+}
+.company-profile-form{
+    
+}
+.company-profile-form__section{
+    display: flex;
+    flex-direction: column;
+    padding: 0.8rem;
+}
+.company-profile-form__subtitle{
+    
+}
+.company-profile-form__label{
+
+}
+.company-profile-form__input{
+}
+.company-profile-form__textarea{
+
+}
+.company-profile-form__submit-button{
+}
