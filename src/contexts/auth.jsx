@@ -15,13 +15,28 @@ export const AuthProvider = ({ children }) => {
 
   // Simulate a login function
   const login = async (email, password, type) => {
-    
-    await fetch("http://localhost:3000/api/" + type +  "s/login", {
+    await fetch("http://localhost:3000/api/" + type + "s/login", {
       method: "POST",
       mode: "cors",
       body: JSON.stringify({ email: email, password: password }),
       headers: {
         "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCurrentUser(data);
+        setUserType(type);
+      });
+  };
+
+  const signup = async ( body, type) => {
+    await fetch("http://localhost:3000/api/" + type + "s/signup", {
+      method: "POST",
+      mode: "cors",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-type": "application/json",
       },
     })
       .then((res) => res.json())
@@ -67,6 +82,7 @@ export const AuthProvider = ({ children }) => {
     userType,
     login,
     logout,
+    signup,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
