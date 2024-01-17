@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "../componentes/Header";
-import "./sign-up-page.css"
+import "./sign-up-page.css";
+import { useAuth } from "../contexts/auth";
 
 export default function SignUpPage() {
   const [step, setStep] = useState(1);
@@ -22,18 +23,20 @@ export default function SignUpPage() {
     // Datos específicos del reclutador
     companyName: "",
     companyEmail: "",
-    companyDescription: "",
+    companyAbout: "",
     companyWebsite: "",
     // Asumimos que podría haber más datos específicos de cada tipo de usuario
   });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const { signup } = useAuth();
+
+  const handleInputChange = (e, name) => {
+    const { value } = e.target;
+    console.log(value)
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleNext = () => {
-    // Validar datos antes de pasar al siguiente paso
     setStep((prevStep) => prevStep + 1);
   };
 
@@ -43,6 +46,37 @@ export default function SignUpPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(userType);
+    if (userType == "professional") {
+      const {
+        email,
+        password,
+        name,
+        phone,
+        birthdate,
+        linkedin,
+        title,
+        experience,
+        education,
+      } = formData;
+      signup(
+        {
+          email,
+          password,
+          name,
+          phone,
+          birthdate,
+          linkedin,
+          title,
+          experience,
+          education,
+        },
+        userType
+      );
+    } else if (userType == "company") {
+      const { companyName, companyEmail, password, companyWebsite, companyAbout } = formData;
+      signup({ company: companyName, email:companyEmail, password, website:companyWebsite, about:companyAbout }, userType);
+    }
     // Aquí manejarías la lógica de envío del formulario
   };
 
@@ -50,8 +84,12 @@ export default function SignUpPage() {
     <div className="signup-page">
       <Header />
       <div className="signup-container">
-        <h2 className="signup-container__title headline-3 mb-16">Good choice!</h2>
-        <p className="signup-container__subtitle headline-6">Create a new account as...</p>
+        <h2 className="signup-container__title headline-3 mb-16">
+          Good choice!
+        </h2>
+        <p className="signup-container__subtitle headline-6">
+          Create a new account as...
+        </p>
 
         <div className="account-type-toggle">
           <button
@@ -83,7 +121,7 @@ export default function SignUpPage() {
         </div>
 
         {userType === "professional" && step === 1 && (
-          <form className="signup-form" onSubmit={handleSubmit}>
+          <form className="signup-form">
             <div className="signup-form__group">
               <label className="signup-form__label label" htmlFor="email">
                 Email
@@ -93,7 +131,7 @@ export default function SignUpPage() {
                 type="email"
                 className="signup-form__input input mb-16 mb-16"
                 value={formData.email}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "email")}
               />
             </div>
 
@@ -106,7 +144,7 @@ export default function SignUpPage() {
                 type="password"
                 className="signup-form__input input mb-16 mb-16"
                 value={formData.password}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "password")}
               />
             </div>
 
@@ -122,18 +160,21 @@ export default function SignUpPage() {
                 type="password"
                 className="signup-form__input input mb-16 mb-16"
                 value={formData.passwordConfirmation}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "passwordConfirmation")}
               />
             </div>
 
-            <button onClick={handleNext} className="signup-form__submit rose-submit-btn">
+            <button
+              onClick={handleNext}
+              className="signup-form__submit rose-submit-btn"
+            >
               Next
             </button>
           </form>
         )}
 
         {userType === "professional" && step === 2 && (
-          <form className="signup-form" onSubmit={handleSubmit}>
+          <form className="signup-form">
             <div className="signup-form__group">
               <label className="signup-form__label label" htmlFor="name">
                 Name
@@ -143,7 +184,7 @@ export default function SignUpPage() {
                 type="text"
                 className="signup-form__input input mb-16"
                 value={formData.name}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "name")}
               />
             </div>
 
@@ -156,7 +197,7 @@ export default function SignUpPage() {
                 type="phone"
                 className="signup-form__input input mb-16"
                 value={formData.phone}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "phone")}
               />
             </div>
 
@@ -166,10 +207,10 @@ export default function SignUpPage() {
               </label>
               <input
                 id="birthdate"
-                type="text"
+                type="date"
                 className="signup-form__input input mb-16"
                 value={formData.birthdate}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "birthdate")}
               />
             </div>
             <div className="signup-form__group">
@@ -181,17 +222,20 @@ export default function SignUpPage() {
                 type="text"
                 className="signup-form__input input mb-16"
                 value={formData.linkedin}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "linkedin")}
               />
             </div>
 
-            <button onClick={handleNext} className="signup-form__submit rose-submit-btn">
+            <button
+              onClick={handleNext}
+              className="signup-form__submit rose-submit-btn"
+            >
               Next
             </button>
           </form>
         )}
         {userType === "professional" && step === 3 && (
-          <form className="signup-form" onSubmit={handleSubmit}>
+          <form className="signup-form">
             <div className="signup-form__group">
               <label className="signup-form__label label" htmlFor="title">
                 Title
@@ -201,7 +245,7 @@ export default function SignUpPage() {
                 type="text"
                 className="signup-form__input input mb-16"
                 value={formData.title}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "title")}
               />
             </div>
 
@@ -214,7 +258,7 @@ export default function SignUpPage() {
                 type="text"
                 className="signup-form__input input mb-16"
                 value={formData.experience}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "experience")}
               />
             </div>
 
@@ -227,11 +271,14 @@ export default function SignUpPage() {
                 type="text"
                 className="signup-form__input input mb-16"
                 value={formData.education}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "education")}
               />
             </div>
 
-            <button onClick={handleNext} className="signup-form__submit rose-submit-btn">
+            <button
+              onClick={(e) => handleSubmit(e)}
+              className="signup-form__submit rose-submit-btn"
+            >
               Next
             </button>
           </form>
@@ -239,7 +286,7 @@ export default function SignUpPage() {
 
         {userType === "company" && step === 1 && (
           // Formulario para el primer paso del reclutador
-          <form className="signup-form" onSubmit={handleSubmit}>
+          <form className="signup-form">
             <div className="signup-form__group">
               <label className="signup-form__label label" htmlFor="companyName">
                 Company Name
@@ -249,7 +296,7 @@ export default function SignUpPage() {
                 name="companyName"
                 placeholder="Company Name"
                 value={formData.companyName}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "companyName")}
                 className="signup-form__input input mb-16"
               />
             </div>
@@ -258,11 +305,11 @@ export default function SignUpPage() {
                 Email
               </label>
               <input
-                id="email"
-                type="email"
+                id="companyEmail"
+                type="companyEmail"
                 className="signup-form__input input mb-16"
-                value={formData.email}
-                onChange={handleInputChange}
+                value={formData.companyEmail}
+                onChange={(e) => handleInputChange(e, "companyEmail")}
               />
             </div>
 
@@ -275,7 +322,7 @@ export default function SignUpPage() {
                 type="password"
                 className="signup-form__input input mb-16"
                 value={formData.password}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "password")}
               />
             </div>
 
@@ -291,10 +338,13 @@ export default function SignUpPage() {
                 type="password"
                 className="signup-form__input input mb-16"
                 value={formData.passwordConfirmation}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "passwordConfirmation")}
               />
             </div>
-            <button onClick={handleNext} className="signup-form__button-next rose-submit-btn">
+            <button
+              onClick={handleNext}
+              className="signup-form__button-next rose-submit-btn"
+            >
               Next
             </button>
           </form>
@@ -302,7 +352,7 @@ export default function SignUpPage() {
 
         {userType === "company" && step === 2 && (
           // Formulario para el segundo paso del reclutador
-          <form className="signup-form" onSubmit={handleSubmit}>
+          <form className="signup-form">
             <div className="signup-form__group">
               <label
                 className="signup-form__label label"
@@ -315,30 +365,37 @@ export default function SignUpPage() {
                 type="text"
                 className="signup-form__input input mb-16"
                 value={formData.companyWebsite}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, "companyWebsite")}
               />
             </div>
             <div className="signup-form__group">
               <label
                 className="signup-form__label label"
-                htmlFor="companyDescription"
+                htmlFor="companyAbout"
               >
-                Company   Description
+                Company Description
               </label>
               <textarea
-                id="companyDescription"
-                name="companyDescription"
+                id="companyAbout"
+                name="companyAbout"
                 placeholder="About The Company"
-                value={formData.companyDescription}
-                onChange={handleInputChange}
+                value={formData.companyAbout}
+                onChange={(e) => handleInputChange(e, "companyAbout")}
                 className="signup-form__textarea textarea mb-16 "
               />
             </div>
             {/* Otros campos específicos para el reclutador */}
-            <button onClick={handleBack} className="signup-form__button-back rose-submit-btn">
+            <button
+              onClick={handleBack}
+              className="signup-form__button-back rose-submit-btn"
+            >
               Back
             </button>
-            <button type="submit" className="signup-form__button-submit rose-submit-btn">
+            <button
+              type="submit"
+              className="signup-form__button-submit rose-submit-btn"
+              onClick={(e) => handleSubmit(e)}
+            >
               Finish
             </button>
           </form>
