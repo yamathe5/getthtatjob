@@ -1,0 +1,50 @@
+.create-job-page{
+    display: flex;
+
+}
+
+.create-job-sidebar__link--active{
+
+}
+.create-job-sidebar__link--logout{
+
+}
+.create-job-main{
+    padding: 3.2rem 0rem 0rem 12rem;
+}
+.create-job-header{
+
+}
+.create-job-header__title{
+ /* Estilos para el título */
+ font-family: "Montserrat", sans-serif;
+ font-size: 3.4rem;
+ font-weight: 400;
+ line-height: 4.1rem;
+ letter-spacing: 0.25px;
+ text-align: left;
+}
+.create-job-form{
+    padding: 0.8rem;
+}
+.create-job-form__section{
+    display: flex;
+    flex-direction: column;
+    padding: 0.8rem;
+
+}
+.create-job-form__subtitle{
+
+}
+.create-job-form__label{
+
+}
+.create-job-form__input{
+
+}
+.create-job-form__textarea{
+
+}
+.create-job-form__submit{
+margin-left: 0.8rem;
+}
