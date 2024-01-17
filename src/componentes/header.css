@@ -1,0 +1,49 @@
+/* Header styles */
+.header {
+  background-color: #ffffff; /* Replace with your desired color */
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__logo {
+  font-size: 24px;
+  font-weight: bold;
+  /* Add other styles such as font family or colors */
+}
+
+.header__buttons {
+  /* Style for the buttons container */
+}
+
+.header__button {
+  padding: 0.8rem 1.6rem;
+  /* margin-left: 10px; */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 1px solid #f48fb1;
+  background-color: white;
+  border-radius: 1.6rem;
+  font-family: "Inter";
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 2.4rem;
+  letter-spacing: 1.25px;
+  text-align: left;
+  color: #616161;
+}
+
+.header__button--signup {
+}
+
+.header__button--login {
+}
+
+.header__button:hover {
+  /* background-color: #b4b4b4; */
+  border: 1px solid #bf5f82;
+  background: #f48fb1;
+  color: #373737;
+}
