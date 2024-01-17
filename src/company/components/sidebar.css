@@ -1,0 +1,43 @@
+/* Estilos para la barra lateral */
+.company-sidebar {
+  /* Ajusta los estilos de la barra lateral aquí */
+  width: 20rem;
+  background-color: #E1E2E1;
+}
+
+.company-sidebar__logo {
+  /* Estilos para el logo */
+  margin-top: 3.2rem;
+  margin-left: 1.6rem;
+}
+
+.company-sidebar__navigation {
+  /* Estilos para la navegación */
+  margin-top: 3.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.company-sidebar__link {
+  /* Estilos comunes para los enlaces */
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+  text-align: left;
+  padding:  1.2rem 0rem;
+  padding-left: 1.6rem;
+  text-decoration: none;
+  color: #616161;
+
+}
+.company-sidebar__link--active {
+    background-color: #F5F5F6;
+    color: #373737;
+
+}
+
+.company-sidebar__link--logout {
+  /* Estilos específicos para el enlace de cierre de sesión */
+}
