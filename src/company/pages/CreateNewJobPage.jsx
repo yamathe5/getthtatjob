@@ -30,7 +30,6 @@ export default function CreateNewJobPage() {
     const now = new Date();
     const dateTimeString = now.toISOString();
 
-    console.log(currentUser)
     await fetch("http://localhost:3000/api/jobs", {
       method: "POST",
       mode: "cors",
@@ -43,6 +42,7 @@ export default function CreateNewJobPage() {
         candidates: 4,
         track: 5,
         close: true,
+        companyid: currentUser.id
       }),
       headers: {
         "Content-Type": "application/json",
