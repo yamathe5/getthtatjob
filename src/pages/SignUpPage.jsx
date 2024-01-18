@@ -32,7 +32,6 @@ export default function SignUpPage() {
 
   const handleInputChange = (e, name) => {
     const { value } = e.target;
-    console.log(value)
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -46,7 +45,6 @@ export default function SignUpPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(userType);
     if (userType == "professional") {
       const {
         email,
