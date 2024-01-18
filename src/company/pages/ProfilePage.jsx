@@ -8,7 +8,6 @@ export default function ProfilePage() {
 
   console.log(inputs)
   function handleOnChangeInput(e, inputType){
-    console.log(inputType)
     setInputs((prev)=>({
       ...prev,
       [inputType]: e.target.value
