@@ -21,13 +21,13 @@ import { useAuth } from "./contexts/auth.jsx";
 
 function App() {
   const { currentUser, userType } = useAuth();
-  function selectRoute(){
-    console.log(userType, "PORQUE RENDERIZA 6 veces u 8")
+  function SelectRoute(){
+    console.log("xd")
     if(userType == "company"){
       return <Navigate to={"/company/job-posting"} />
     }else if (userType == "professional"){
       return <Navigate to={"/professional/find-that-job"} />
-    }
+    }else return <Navigate to={"/professional/find-that-job"} />
   }
   return (
     <Routes>
@@ -38,7 +38,8 @@ function App() {
           !currentUser ? (
             <Homepage />
           ) : (
-            () => selectRoute()
+            <SelectRoute/>
+            
           )
         }
       />
@@ -48,7 +49,7 @@ function App() {
           !currentUser ? (
             <Login />
           ) : (
-            () => selectRoute()
+            <SelectRoute/>
           )
         }
       />
@@ -58,7 +59,7 @@ function App() {
           !currentUser ? (
             <SignUp />
           ) : (
-            () => selectRoute()
+            <SelectRoute/>
           )
         }
       />
