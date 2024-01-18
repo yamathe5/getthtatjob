@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import "./job-posting-page.css";
-
+import { useAuth } from "../../contexts/auth";
 function formateDate(date) {
   const newDate = new Date(date);
 
@@ -22,6 +22,10 @@ export default function JobPostingPage() {
   const [filter, setFilter] = useState("all");
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
+
+  const {currentUser} = useAuth();
+
+
   function handleToggleButtonLocal(e, id) {
     // ESTO DEBE CAMBIAR EL ESTADO TAMBIEN EN LA BASE DE DATOS
     setJobs((prevJobs) =>
@@ -51,7 +55,7 @@ export default function JobPostingPage() {
   }, [filter, jobs]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/jobs")
+    fetch(`http://localhost:3000/api/companys/${currentUser.id}/jobs`)
       .then((resp) => resp.json())
       .then((data) => {
         setJobs(data);
@@ -85,8 +89,6 @@ export default function JobPostingPage() {
           <h1 className="job-posting-header__title headline-4 mb-16">
             Job Postings
           </h1>
-          {/* Add filter toggles and sort options here */}
-          {/* <div className="applications-main__container mb-16"> </div> */}
         </header>
         <section className="job-posting-page__filter">
           <div className="job-posting-page__filter__filter mb-16">
