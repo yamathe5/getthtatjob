@@ -2,6 +2,30 @@ import { useEffect, useState } from "react";
 import "./your-aplication-page.css";
 import Sidebar from "../components/Sidebar";
 import Logo from "../../assets/logo.png";
+
+
+import { formatDistanceToNow } from 'date-fns';
+
+function TimeAgo({ dateString }) {
+  const date = new Date(dateString);
+  return `${formatDistanceToNow(date, { addSuffix: true })}`;
+}
+
+function formatStatus(status){
+  if (status == "waiting") {
+    return "Waiting for review"
+  }else if (status == "inprogress"){
+    return "Review in progress"
+  }else if  (status == "finished"){
+    return "Review finished"
+  }else if  (status == "delined"){
+    return "Review decined on ======="
+  }else {
+    return "Status not valid"
+  }
+}
+
+
 export default function YourApplicationsPage() {
   // Estado para los filtros de las aplicaciones
   const [filter, setFilter] = useState("all");
@@ -109,7 +133,7 @@ export default function YourApplicationsPage() {
         <section className="applications-list">
           {
             applications && applications.map((application, index)=>{
-              return <article className="application-card" key={index}>
+              return <article className="application-card mb-16" key={index}>
               <header className="application-card__header">
                 <img
                   src={Logo}
@@ -133,31 +157,17 @@ export default function YourApplicationsPage() {
                 </p>
               </div>
               <div className="application__status">
-                <p className="application__status-time">Sent 1 min. ago</p>
-                <p className="application__status-review">{application.status}</p>
+                <p className="application__status-time">
+                <TimeAgo dateString="2022-02-10T05:00:00.000Z" />
+
+                </p>
+                <p className="application__status-review">{formatStatus(application.status)} </p>
               </div>
             </article>
             })
           }
          
-          <br />
-          <br />
-          <article className="application-card">
-            <header className="application-card__header">
-              <img
-                src=""
-                alt="Company Logo"
-                className="application-card__logo"
-              />
-              <h3 className="application__job-title">The job title</h3>
-              <p className="application__company-name">The Company Name SA</p>
-            </header>
-            <p className="application-card__status">Status: Applied</p>
-            <button className="application-card__action-button">View</button>
-            <button className="application-card__action-button">
-              Withdraw
-            </button>
-          </article>
+        
         </section>
       </main>
     </div>
