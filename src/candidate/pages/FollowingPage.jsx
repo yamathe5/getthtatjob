@@ -2,8 +2,61 @@ import Sidebar from "../components/Sidebar";
 import "./following-page.css";
 
 import Logo from "../../assets/logo.png";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../contexts/auth";
 
 export default function Following() {
+  // const url = `http://localhost:3000/api/following/professionals/2/following`
+  const { currentUser } = useAuth();
+  const [data, setData] = useState([]);
+  const [jobs, setJobs] = useState([]); // Correct destructuring
+  const [companys, setCompanys] = useState([]); // Correct destructuring
+
+  useEffect(() => {
+    console.log(currentUser);
+    fetch(
+      `http://localhost:3000/api/following/professionals/${currentUser.id}/following`
+    )
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log(data);
+        setData(data);
+        setJobs(getJobs(data));
+        setCompanys(getCompanys(data));
+      });
+  }, [currentUser]);
+
+  function handleOnClickRemoveFollow(e, id) {
+    console.log("Removing follow with id:", id);
+    fetch(`http://localhost:3000/api/following/professionals/${currentUser.id}/unfollow/${id}`, {
+      method: "DELETE",
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      console.log(response)
+      return response.json();
+    })
+    .then(data => {
+      console.log("Unfollow successful:", data);
+      // Actualiza el estado o realiza alguna acción después de un unfollow exitoso
+    })
+    .catch(error => {
+      console.log(error)
+      console.error("Error during unfollow:", error);
+      // Maneja cualquier error que ocurra durante la solicitud
+    });
+  }
+  
+
+  function getJobs(data) {
+    return data.filter((item) => item.jobid != null);
+  }
+  function getCompanys(data) {
+    return data.filter((item) => item.companyid != null);
+  }
+
   return (
     <div className="following-page">
       <Sidebar></Sidebar>
@@ -18,58 +71,80 @@ export default function Following() {
             You are following 2 jobs
           </p>
           <div className="following-content__container mb-16">
-            <div className="following-card">
-              <div className="job-card">
-                <div className="job-card__details">
-                  <img src={Logo} alt="" className="job-card__image" />
-                  <div className="job-card__text">
-                    <p className="job-card__category">Manufactoring</p>
-                    <p className="job-card__job-title">The job title</p>
-                    <p className="job-card__company-name">The Company Name</p>
-                    <div className="job-card__info">
-                      <p className="job-card__employment-type">Full time</p>
-                      <p className="job-card__salary-range">2.0k - 2.5k</p>
+            {jobs &&
+              jobs.map((item, index) => {
+                return (
+                  <div className="following-card" key={index}>
+                    <div className="job-card">
+                      <div className="job-card__details">
+                        <img src={Logo} alt="" className="job-card__image" />
+                        <div className="job-card__text">
+                          <p className="job-card__category">{item.category}</p>
+                          <p className="job-card__job-title">{item.title}</p>
+                          <p className="job-card__company-name mb-4">
+                            {item.jobcompanyname}
+                          </p>
+                          <div className="job-card__info">
+                            <p className="job-card__employment-type">
+                              {item.type}
+                            </p>
+                            <p className="job-card__salary-range">
+                              {item.salaryrange} - {item.salaryrange}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="job-card__actions">
+                        <button className="job-card__action-button job-card__action-button--follow" onClick={(e) => handleOnClickRemoveFollow(e, item.id)}>
+                          O FOLLOWING
+                        </button>
+                        <button className="job-card__action-button job-card__action-button--see-more">
+                          SEE MORE
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="job-card__actions">
-                  <button className="job-card__action-button job-card__action-button--follow">
-                    O FOLLOW
-                  </button>
-                  <button className="job-card__action-button job-card__action-button--see-more">
-                    SEE MORE
-                  </button>
-                </div>
-              </div>
-            </div>
+                );
+              })}
           </div>
           <p className="following-header__subtitle headline-6 mb-8">
             You are following 1 company
           </p>
           <div className="mb-16">
             <div className="following-card">
-              <div className="job-card">
-                <div className="job-card__details">
-                  <img src={Logo} alt="" className="job-card__image" />
-                  <div className="job-card__text">
-                    <p className="job-card__category">Manufactoring</p>
-                    <p className="job-card__job-title">The job title</p>
-                    <p className="job-card__company-name">The Company Name</p>
-                    <div className="job-card__info">
-                      <p className="job-card__employment-type">Full time</p>
-                      <p className="job-card__salary-range">2.0k - 2.5k</p>
+              {companys &&
+                companys.map((item, index) => {
+                  return (
+                    <div className="job-card" key={index}>
+                      <div className="job-card__details">
+                        <img src={Logo} alt="" className="job-card__image" />
+                        <div className="job-card__text">
+                          {/* <p className="job-card__category">Manufactoring</p> */}
+                          <p className="job-card__job-title">{item.companyname}</p>
+                          {/* <p className="job-card__company-name">
+                            The Company Name
+                          </p> */}
+                          <div className="job-card__info">
+                            <p className="job-card__employment-type">
+                              {item.jobcount} job openings
+                            </p>
+                            {/* <p className="job-card__salary-range">
+                              2.0k - 2.5k
+                            </p> */}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="job-card__actions">
+                        <button className="job-card__action-button job-card__action-button--follow" onClick={(e) => handleOnClickRemoveFollow(e, item.id)}>
+                          O FOLLOW
+                        </button>
+                        <button className="job-card__action-button job-card__action-button--see-more">
+                          SEE MORE
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div className="job-card__actions">
-                  <button className="job-card__action-button job-card__action-button--follow">
-                    O FOLLOW
-                  </button>
-                  <button className="job-card__action-button job-card__action-button--see-more">
-                    SEE MORE
-                  </button>
-                </div>
-              </div>
+                  );
+                })}
             </div>
           </div>
           {/* Repeat the .following-card block for each followed company */}
