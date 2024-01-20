@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./your-aplication-page.css";
 import Sidebar from "../components/Sidebar";
-import Logo from "../../assets/logo.png"
+import Logo from "../../assets/logo.png";
 export default function YourApplicationsPage() {
   // Estado para los filtros de las aplicaciones
   const [filter, setFilter] = useState("all");
+  const [applications, setApplications] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/applications/professionals/4/applications")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setApplications(data);
+      });
+  }, []);
 
   return (
     <div className="applications-page">
@@ -93,36 +103,43 @@ export default function YourApplicationsPage() {
             </div>
           </div>
         </header>
+        <h2 className="applications-list__count headline-6 mb-8">
+          4 applications found
+        </h2>
         <section className="applications-list">
-          <h2 className="applications-list__count headline-6 mb-8">
-            4 applications found
-          </h2>
-          <article className="application-card">
-            <header className="application-card__header">
-              <img
-                src={Logo}
-                alt="Company Logo"
-                className="application-card__logo"
-              />
-              <div className="application__info">
-                <h3 className="application__job-title headline-6">
-                  The job title
-                </h3>
-                <p className="application__company-name">The Company Name SA</p>
+          {
+            applications && applications.map((application, index)=>{
+              return <article className="application-card" key={index}>
+              <header className="application-card__header">
+                <img
+                  src={Logo}
+                  alt="Company Logo"
+                  className="application-card__logo"
+                />
+                <div className="application__info">
+                  <h3 className="application__job-title headline-6">
+                    {application.title}
+                  </h3>
+                  <p className="application__company-name">{application.company}</p>
+                </div>
+              </header>
+  
+              <div className="application__details ">
+                <p className="application__detail mb-8">
+                  Manufacturing Full time
+                </p>
+                <p className="application__detail">
+                {application.salaryrange} - {application.salaryrange}
+                </p>
               </div>
-            </header>
-
-            <div className="application__details ">
-              <p className="application__detail mb-8">Manufacturing Full time</p>
-              <p className="application__detail">
-                2.0k - 2.5k Posted 2 days ago
-              </p>
-            </div>
-            <div className="application__status">
-              <p className="application__status-time">Sent 1 min. ago</p>
-              <p className="application__status-review">Waiting for review</p>
-            </div>
-          </article>
+              <div className="application__status">
+                <p className="application__status-time">Sent 1 min. ago</p>
+                <p className="application__status-review">{application.status}</p>
+              </div>
+            </article>
+            })
+          }
+         
           <br />
           <br />
           <article className="application-card">
