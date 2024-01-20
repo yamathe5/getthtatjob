@@ -8,7 +8,6 @@ import { useAuth } from "../../contexts/auth";
 export default function Following() {
   // const url = `http://localhost:3000/api/following/professionals/2/following`
   const { currentUser } = useAuth();
-  const [data, setData] = useState([]);
   const [jobs, setJobs] = useState([]); // Correct destructuring
   const [companys, setCompanys] = useState([]); // Correct destructuring
 
@@ -20,7 +19,6 @@ export default function Following() {
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
-        setData(data);
         setJobs(getJobs(data));
         setCompanys(getCompanys(data));
       });
