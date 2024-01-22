@@ -3,14 +3,16 @@ import "./find-that-job-page.css";
 import Sidebar from "../components/Sidebar";
 import Logo from "../../assets/logo.png";
 export default function FindThatJobPage() {
-  const [minSalary, setMinSalary] = useState("");
-  const [maxSalary, setMaxSalary] = useState("");
+  // const [minSalary, setMinSalary] = useState("");
+  // const [maxSalary, setMaxSalary] = useState("");
   // const [searchType, setSearchType] = useState("full-time");
   const [jobs, setjobs] = useState([]);
   const [filteredJobs, setFilteresJobs] = useState([]);
   const [searchValue, setSearchValue] = useState({
     search: "",
-    type:"full-time"
+    type:"all",
+    minSalary: 0,
+    maxSalary:0
   });
 
   useEffect(() => {
@@ -22,41 +24,30 @@ export default function FindThatJobPage() {
   }, []);
 
   function handleSearchChange(e, inputType) {
-    setSearchValue(
-      prev => ({
-        ...prev,
-        [inputType] : e.target.value
-      })
-    );
-    const newFilteredjobs = inputType == "type" ? filterByType() : filterBySearch()
-    
-
-    function filterByType() {
-      return jobs.filter((item) => {
-        const title = item.type || ""; // Fallback to empty string if null/undefined
+    const newValue = e.target.value;
+    const newSearchValue = {
+      ...searchValue,
+      [inputType]: newValue
+    };
   
-        return (
-          title.toLowerCase().includes(e.target.value.toLowerCase()) 
-        );
-      });
-    }
-
-    function filterBySearch() {
-      return jobs.filter((item) => {
-        const title = item.title || ""; // Fallback to empty string if null/undefined
-        const company = item.company || ""; // Fallback to empty string if null/undefined
+    setSearchValue(newSearchValue);
   
-        return (
-          title.toLowerCase().includes(e.target.value.toLowerCase()) ||
-          company.toLowerCase().includes(e.target.value.toLowerCase()) 
-        );
-      });
+    const newFilteredJobs = jobs.filter((job) => {
+      const satisfiesType = job.type.toLowerCase().includes(newSearchValue.type.toLowerCase()) || newSearchValue.type.toLowerCase() == "all";
+      const satisfiesSearch = job.title.toLowerCase().includes(newSearchValue.search.toLowerCase()) || job.company.toLowerCase().includes(newSearchValue.search.toLowerCase()) ;
+      const satisfiesMinSalary = parseInt(job.minsalary, 10) >= parseInt(newSearchValue.minSalary, 10) || newSearchValue.minSalary == "";
+      const satisfiesMaxSalary = parseInt(job.maxsalary, 10) <= parseInt(newSearchValue.maxSalary, 10) || newSearchValue.maxSalary == "";
+  
+      return satisfiesType && satisfiesSearch && satisfiesMinSalary && satisfiesMaxSalary;
+    });
+  
+    setFilteresJobs(newFilteredJobs);
+    // if (!newSearchValue.search && newSearchValue.type === "all" && newSearchValue.minSalary == "" && newSearchValue.maxSalary == "") {
+    //   setFilteresJobs(jobs);
+    // } else {
+    // }
     }
-
-    
-
-    setFilteresJobs(newFilteredjobs);
-  }
+  
 
   return (
     <div className="find-job-page">
@@ -103,6 +94,7 @@ export default function FindThatJobPage() {
                 Type
               </label>
               <select id="type" value={searchValue.type} onChange={(e)=> handleSearchChange(e, "type")} className="find-job-filters__select input">
+                <option value="all">All</option>
                 <option value="full-time">Full Time</option>
                 <option value="part-time">Part Time</option>
                 {/* Add more type options */}
@@ -120,8 +112,8 @@ export default function FindThatJobPage() {
                   type="number"
                   id="minSalary"
                   className="find-job-filters__input find-job-filters__input--min input"
-                  value={minSalary}
-                  onChange={(e) => setMinSalary(e.target.value)}
+                  value={searchValue.minSalary}
+                  onChange={(e)=> handleSearchChange(e, "minSalary")}
                   placeholder="min"
                 />
                 <div></div>
@@ -129,8 +121,8 @@ export default function FindThatJobPage() {
                   type="number"
                   id="maxSalary"
                   className="find-job-filters__input find-job-filters__input--max input"
-                  value={maxSalary}
-                  onChange={(e) => setMaxSalary(e.target.value)}
+                  value={searchValue.maxSalary}
+                  onChange={(e)=> handleSearchChange(e, "maxSalary")}
                   placeholder="max"
                 />
               </div>
@@ -155,7 +147,7 @@ export default function FindThatJobPage() {
                       <div className="job-card__info">
                         <p className="job-card__employment-type">{item.type}</p>
                         <p className="job-card__salary-range">
-                          {item.salaryrange} - {item.salaryrange}
+                          ${item.minsalary} - ${item.maxsalary}
                         </p>
                       </div>
                     </div>
