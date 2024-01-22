@@ -22,7 +22,6 @@ import { useAuth } from "./contexts/auth.jsx";
 function App() {
   const { currentUser, userType } = useAuth();
   function SelectRoute(){
-    console.log("xd")
     if(userType == "company"){
       return <Navigate to={"/company/job-posting"} />
     }else if (userType == "professional"){

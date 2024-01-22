@@ -12,13 +12,11 @@ export default function Following() {
   const [companys, setCompanys] = useState([]); // Correct destructuring
 
   useEffect(() => {
-    console.log(currentUser);
     fetch(
       `http://localhost:3000/api/following/professionals/${currentUser.id}/following`
     )
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data);
         setJobs(getJobs(data));
         setCompanys(getCompanys(data));
       });
@@ -33,7 +31,6 @@ export default function Following() {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      console.log(response)
       return response.json();
     })
     .then(data => {

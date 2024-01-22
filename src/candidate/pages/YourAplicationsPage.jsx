@@ -35,7 +35,6 @@ export default function YourApplicationsPage() {
     fetch("http://localhost:3000/api/applications/professionals/4/applications")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setApplications(data);
       });
   }, []);
