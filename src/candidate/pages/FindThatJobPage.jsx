@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import "./find-that-job-page.css";
 import Sidebar from "../components/Sidebar";
 import Logo from "../../assets/logo.png";
+import { useAuth } from "../../contexts/auth";
 export default function FindThatJobPage() {
   // const [minSalary, setMinSalary] = useState("");
   // const [maxSalary, setMaxSalary] = useState("");
   // const [searchType, setSearchType] = useState("full-time");
+  
   const [jobs, setjobs] = useState([]);
   const [filteredJobs, setFilteresJobs] = useState([]);
   const [searchValue, setSearchValue] = useState({
@@ -15,13 +17,52 @@ export default function FindThatJobPage() {
     maxSalary:0
   });
 
+  const {currentUser} = useAuth()
+
   useEffect(() => {
-    fetch("http://localhost:3000/api/jobs")
+    fetch(`http://localhost:3000/api/jobs/${currentUser.id}`)
       .then((response) => response.json())
       .then((data) => {
         setjobs(data), setFilteresJobs(data);
       });
-  }, []);
+  }, [currentUser]);
+
+  function toggleFollow (jobId, following, followingid){
+    
+    if(following){
+      fetch(`http://localhost:3000/api/following/professionals/${currentUser.id}/unfollow/${followingid}`, {
+        method: "DELETE",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+  
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        });
+    }else {
+      fetch(`http://localhost:3000/api/following/professionals/${currentUser.id}/follow`, {
+        method: "POST",
+        mode: "cors",
+        body: JSON.stringify({ professionalid: currentUser.id,  jobid: jobId, following: true }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+  
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        });
+    }
+    
+  
+  }
+
+ 
+
 
   function handleSearchChange(e, inputType) {
     const newValue = e.target.value;
@@ -153,8 +194,8 @@ export default function FindThatJobPage() {
                     </div>
                   </div>
                   <div className="job-card__actions">
-                    <button className="job-card__action-button job-card__action-button--follow">
-                      O FOLLOW
+                    <button className="job-card__action-button job-card__action-button--follow" onClick={()=>toggleFollow(item.id, item.following, item.followingid)}>
+                      { item.following ? "FOLLOWING" : "NOT FOLLOWING"}
                     </button>
                     <button className="job-card__action-button job-card__action-button--see-more">
                       SEE MORE
