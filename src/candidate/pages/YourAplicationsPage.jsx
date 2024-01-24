@@ -45,18 +45,33 @@ export default function YourApplicationsPage() {
       });
   }, [currentUser]);
 
-  function handleDeclineApplication(aplicationId){
-    console.log(aplicationId)
-    fetch(`http://localhost:3000/api/applications/professionals/${currentUser.id}/applications/${aplicationId}`, {
-      method:  "DELETE" ,
+  function handleDeclineApplication(applicationId) {
+    console.log(applicationId);
+    fetch(`http://localhost:3000/api/applications/professionals/${currentUser.id}/applications/${applicationId}`, {
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
-
-    }).then((res)=>{
-      return res.json()
-    }).then((data)=>{
-      console.log(data)
     })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      return res.json();
+    })
+    .then(() => {
+      // Aquí actualizamos el estado para reflejar la eliminación de la aplicación
+      console.log(applications, applicationId)
+      const updatedApplications = applications.filter(application => application.applicationsid !== applicationId);
+      setApplications(updatedApplications);
+      settFilteredApplications(updatedApplications.filter(application => {
+        // Puedes necesitar ajustar este filtro si tienes alguna lógica adicional para los `filteredApplications`
+        return filter === "all" || application.status === filter;
+      }));
+    })
+    .catch((error) => {
+      console.error("Error during unfollow:", error);
+    });
   }
+  
 
   function handleCardClick(clickedId) {
     setExpandedCard(expandedCard === clickedId ? null : clickedId);
