@@ -3,6 +3,7 @@
   /* Ajusta los estilos de la barra lateral aquí */
   width: 24rem;
   background-color: #E1E2E1;
+  min-height: 100vh;
 }
 
 .professional-sidebar__logo {
