@@ -36,12 +36,10 @@ export default function FindThatJobPage() {
   };
 
   function toggleFollow(jobId, following, followingid) {
-    console.log("jobid :" , jobId,"following: ", following, "followingid: ", followingid)
     const url = following
       ? `http://localhost:3000/api/following/professionals/${currentUser.id}/unfollow/${followingid}`
       : `http://localhost:3000/api/following/professionals/${currentUser.id}/follow`;
 
-      console.log("MyURL: ",url)
   
     const options = {
       method: following ? "DELETE" : "POST",
@@ -53,14 +51,12 @@ export default function FindThatJobPage() {
       .then((response) => response.json())
       .then((data) => {
           const updateJobs = jobs.map((job) => {
-          // console.log(job.id , jobId)
           if (job.id == jobId) {
             return { ...job, following: !following, followingid: following ? null : data[0].id };
 
           }
           return job;
         });
-        console.log(updateJobs[0])
         setjobs(updateJobs);
         setFilteredJobs(updateJobs.filter((job) => {
           const satisfiesSearch = job.title.toLowerCase().includes(searchValue.search.toLowerCase()) || job.company.toLowerCase().includes(searchValue.search.toLowerCase());
@@ -210,7 +206,7 @@ export default function FindThatJobPage() {
                       { item.following ? "FOLLOWING" : "NOT FOLLOWING"}
                     </button>
                     <button className="job-card__action-button job-card__action-button--see-more" onClick={() => handleSeeMoreClick(item.id)}>
-                      SEE MORE
+                      {item.applied?  "APPLIED" : "SEE MORE" }
                     </button>
                   </div>
                 </div>
