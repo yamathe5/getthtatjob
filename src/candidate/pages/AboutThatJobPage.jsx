@@ -93,7 +93,7 @@ export default function AboutThatJobPage() {
             <h3 className="about-job__company-name headline-5">
               {job[0].company}
             </h3>
-            <p className="about-job__company-status">FOLLOWING</p>
+            <p className="about-job__company-status">{ job[0].following ? "FOLLOWING" : "NOT FOLLOWING"}</p>
           </div>
 
           {
