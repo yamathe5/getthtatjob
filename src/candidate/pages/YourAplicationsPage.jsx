@@ -3,41 +3,79 @@ import "./your-aplication-page.css";
 import Sidebar from "../components/Sidebar";
 import Logo from "../../assets/logo.png";
 
-
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from "date-fns";
+import { useAuth } from "../../contexts/auth";
 
 function TimeAgo({ dateString }) {
   const date = new Date(dateString);
   return `${formatDistanceToNow(date, { addSuffix: true })}`;
 }
 
-function formatStatus(status){
+function formatStatus(status) {
   if (status == "waiting") {
-    return "Waiting for review"
-  }else if (status == "inprogress"){
-    return "Review in progress"
-  }else if  (status == "finished"){
-    return "Review finished"
-  }else if  (status == "delined"){
-    return "Review decined on ======="
-  }else {
-    return "Status not valid"
+    return "Waiting for review";
+  } else if (status == "inprogress") {
+    return "Review in progress";
+  } else if (status == "finished") {
+    return "Review finished";
+  } else if (status == "delined") {
+    return "Review decined on =======";
+  } else {
+    return "Status not valid";
   }
 }
-
 
 export default function YourApplicationsPage() {
   // Estado para los filtros de las aplicaciones
   const [filter, setFilter] = useState("all");
   const [applications, setApplications] = useState([]);
+  const [filteredApplications, settFilteredApplications] = useState([]);
+  const [expandedCard, setExpandedCard] = useState(null);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/applications/professionals/4/applications")
+    fetch(
+      `http://localhost:3000/api/applications/professionals/${currentUser.id}/applications`
+    )
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setApplications(data);
+        settFilteredApplications(data);
       });
-  }, []);
+  }, [currentUser]);
+
+  function handleDeclineApplication(aplicationId){
+    console.log(aplicationId)
+    fetch(`http://localhost:3000/api/applications/professionals/${currentUser.id}/applications/${aplicationId}`, {
+      method:  "DELETE" ,
+      headers: { "Content-Type": "application/json" },
+
+    }).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      console.log(data)
+    })
+  }
+
+  function handleCardClick(clickedId) {
+    setExpandedCard(expandedCard === clickedId ? null : clickedId);
+  }
+
+  function handleOnClickFilter(e) {
+    setFilter(e.target.value);
+    console.log(e.target.value, filter);
+
+    if (e.target.value == "all") {
+      settFilteredApplications(applications);
+      return;
+    }
+    const newFIlteredItems = applications.filter((item) => {
+      return item.status == e.target.value;
+    });
+
+    settFilteredApplications(newFIlteredItems);
+  }
 
   return (
     <div className="applications-page">
@@ -57,7 +95,7 @@ export default function YourApplicationsPage() {
                 name="applicationFilter"
                 value="all"
                 checked={filter === "all"}
-                onChange={(e) => setFilter(e.target.value)}
+                onChange={(e) => handleOnClickFilter(e)}
                 className="job-posting-page__filter-input"
               />
               <label htmlFor="all" className="applications-filter__label label">
@@ -69,7 +107,7 @@ export default function YourApplicationsPage() {
                 name="applicationFilter"
                 value="waiting"
                 checked={filter === "waiting"}
-                onChange={(e) => setFilter(e.target.value)}
+                onChange={(e) => handleOnClickFilter(e)}
                 className="job-posting-page__filter-input"
               />
               <label
@@ -80,30 +118,30 @@ export default function YourApplicationsPage() {
               </label>
               <input
                 type="radio"
-                id="inProgress"
+                id="inprogress"
                 name="applicationFilter"
-                value="inProgress"
-                checked={filter === "inProgress"}
-                onChange={(e) => setFilter(e.target.value)}
+                value="inprogress"
+                checked={filter === "inprogress"}
+                onChange={(e) => handleOnClickFilter(e)}
                 className="job-posting-page__filter-input"
               />
               <label
-                htmlFor="inProgress"
+                htmlFor="inprogress"
                 className="applications-filter__label label"
               >
                 In progress
               </label>
               <input
                 type="radio"
-                id="Finished"
+                id="finished"
                 name="applicationFilter"
-                value="Finished"
-                checked={filter === "Finished"}
-                onChange={(e) => setFilter(e.target.value)}
+                value="finished"
+                checked={filter === "finished"}
+                onChange={(e) => handleOnClickFilter(e)}
                 className="job-posting-page__filter-input"
               />
               <label
-                htmlFor="Finished"
+                htmlFor="finished"
                 className="applications-filter__label label"
               >
                 Finished
@@ -114,7 +152,7 @@ export default function YourApplicationsPage() {
                 name="applicationFilter"
                 value="declined"
                 checked={filter === "declined"}
-                onChange={(e) => setFilter(e.target.value)}
+                onChange={(e) => handleOnClickFilter(e)}
                 className="job-posting-page__filter-input"
               />
               <label
@@ -130,43 +168,67 @@ export default function YourApplicationsPage() {
           4 applications found
         </h2>
         <section className="applications-list">
-          {
-            applications && applications.map((application, index)=>{
-              return <article className="application-card mb-16" key={index}>
-              <header className="application-card__header">
-                <img
-                  src={Logo}
-                  alt="Company Logo"
-                  className="application-card__logo"
-                />
-                <div className="application__info">
-                  <h3 className="application__job-title headline-6">
-                    {application.title}
-                  </h3>
-                  <p className="application__company-name">{application.company}</p>
-                </div>
-              </header>
-  
-              <div className="application__details ">
-                <p className="application__detail mb-8">
-                  Manufacturing Full time
-                </p>
-                <p className="application__detail">
-                {application.salaryrange} - {application.salaryrange}
-                </p>
-              </div>
-              <div className="application__status">
-                <p className="application__status-time">
-                <TimeAgo dateString="2022-02-10T05:00:00.000Z" />
+          {filteredApplications &&
+            filteredApplications.map((application, index) => {
+              return (
+                <article
+                  className={`application-card-container mb-16 ${
+                    expandedCard === application.id ? "expanded" : ""
+                  }`}
+                  key={index}
+                  onClick={() => handleCardClick(application.id)}
+                >
+                  <div className={`application-card ${expandedCard === application.id ? "mb-16" : ""}`}>
+                    <header className="application-card__header">
+                      <img
+                        src={Logo}
+                        alt="Company Logo"
+                        className="application-card__logo"
+                      />
+                      <div className="application__info">
+                        <h3 className="application__job-title headline-6">
+                          {application.title}
+                        </h3>
+                        <p className="application__company-name">
+                          {application.company}
+                        </p>
+                      </div>
+                    </header>
 
-                </p>
-                <p className="application__status-review">{formatStatus(application.status)} </p>
-              </div>
-            </article>
-            })
-          }
-         
-        
+                    <div className="application__details ">
+                      <p className="application__detail mb-8">
+                        Manufacturing   Full time
+                      </p>
+                      <p className="application__detail">
+                        ${application.minsalary} - ${application.maxsalary}
+                      </p>
+                    </div>
+                    <div className="application__status">
+                      <p className="application__status-time">
+                        <TimeAgo dateString={application.date} />
+                      </p>
+                      <p className="application__status-review">
+                        {formatStatus(application.status)}{" "}
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    className={`application__extra-content ${
+                      expandedCard === application.id ? "show" : ""
+                    }`}
+                  >
+                    <p className="extra-content__last-updated mb-16">Last Updated on 03/22/21</p>
+                    <h3 className="extra-content__heading mb-8">Professional experience</h3>
+                    <p className="extra-content__mandatory mb-16">{application.professionalexperience}</p>
+                    <h3 className="extra-content__heading mb-8">Why are you interested in working at {application.company}</h3>
+                    <p className="extra-content__optional mb-16">{application.whyareyouinterested}</p>
+                    <div>
+                      <button className="extra-content__decline-btn" onClick={()=>handleDeclineApplication(application.applicationsid)}>X DECLINE APPLICATION</button>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
         </section>
       </main>
     </div>
