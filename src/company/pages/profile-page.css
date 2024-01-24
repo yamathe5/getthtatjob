@@ -28,12 +28,15 @@
     
 }
 .company-profile-main{
-    padding: 3.2rem 0rem 0rem 12rem;
+    padding: 3.2rem 0rem ;
     background: #F5F5F6;
-    width: 100%;
+    width: calc(100% - 24rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .company-profile-header{
-    
+    width: 80%;
 }
 .company-profile-header__title{
         /* Estilos para el título */
@@ -46,12 +49,13 @@
 
 }
 .company-profile-form{
-    
+    width: 80%;
 }
 .company-profile-form__section{
     display: flex;
     flex-direction: column;
     padding: 0.8rem;
+    /* width: 80%; */
 }
 .company-profile-form__subtitle{
     

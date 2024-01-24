@@ -2,12 +2,15 @@
     display: flex;
 }
 .job-posting-main{
-    padding: 3.2rem 0rem 0rem 12rem;
+    padding: 3.2rem 0rem ;
     background: #F5F5F6;
-width: 100%;
+width: calc(100% - 24rem);
+display: flex;
+flex-direction: column;
+align-items: center;
 }
 .job-posting-header{
-    
+    width: 80%;
 }
 .job-posting-header__title{
     /* Estilos para el título */
@@ -20,6 +23,7 @@ width: 100%;
 }
 .job-posting-page__filter{
     padding: 0.8rem;
+    width: 80%;
 }
 .job-posting-page__filter__filter{
     
