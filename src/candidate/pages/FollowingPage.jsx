@@ -4,12 +4,17 @@ import "./following-page.css";
 import Logo from "../../assets/logo.png";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/auth";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Following() {
   // const url = `http://localhost:3000/api/following/professionals/2/following`
   const { currentUser } = useAuth();
   const [jobs, setJobs] = useState([]); // Correct destructuring
   const [companys, setCompanys] = useState([]); // Correct destructuring
+
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     fetch(
@@ -22,7 +27,13 @@ export default function Following() {
       });
   }, [currentUser]);
 
-  function handleOnClickRemoveFollow(e, id) {
+  const handleSeeMoreClick = (id) => {
+    // Asume que el ID es del trabajo. Ajusta la ruta según sea necesario.
+    navigate(`/professional/find-that-job/${id}`);
+  };
+  
+
+  function handleOnClickRemoveFollow(e, id, type) {
     console.log("Removing follow with id:", id);
     fetch(`http://localhost:3000/api/following/professionals/${currentUser.id}/unfollow/${id}`, {
       method: "DELETE",
@@ -35,6 +46,13 @@ export default function Following() {
     })
     .then(data => {
       console.log("Unfollow successful:", data);
+      if(type == "job"){
+        const newFilteredJobs = jobs.filter((job) => job.id !== id);
+        setJobs(newFilteredJobs);
+      } else if(type == "company") {
+        const newFilteredCompanys = companys.filter((company) => company.id !== id);
+        setCompanys(newFilteredCompanys);
+          }
       // Actualiza el estado o realiza alguna acción después de un unfollow exitoso
     })
     .catch(error => {
@@ -90,10 +108,10 @@ export default function Following() {
                         </div>
                       </div>
                       <div className="job-card__actions">
-                        <button className="job-card__action-button job-card__action-button--follow" onClick={(e) => handleOnClickRemoveFollow(e, item.id)}>
+                        <button className="job-card__action-button job-card__action-button--follow" onClick={(e) => handleOnClickRemoveFollow(e, item.id, "job")}>
                           O FOLLOWING
                         </button>
-                        <button className="job-card__action-button job-card__action-button--see-more">
+                        <button className="job-card__action-button job-card__action-button--see-more on" onClick={() => handleSeeMoreClick(item.jobid)}>
                           SEE MORE
                         </button>
                       </div>
@@ -130,7 +148,7 @@ export default function Following() {
                         </div>
                       </div>
                       <div className="job-card__actions">
-                        <button className="job-card__action-button job-card__action-button--follow" onClick={(e) => handleOnClickRemoveFollow(e, item.id)}>
+                        <button className="job-card__action-button job-card__action-button--follow" onClick={(e) => handleOnClickRemoveFollow(e, item.id, "company")}>
                           O FOLLOW
                         </button>
                         <button className="job-card__action-button job-card__action-button--see-more">
