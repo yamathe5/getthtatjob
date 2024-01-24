@@ -3,13 +3,16 @@ import "./find-that-job-page.css";
 import Sidebar from "../components/Sidebar";
 import Logo from "../../assets/logo.png";
 import { useAuth } from "../../contexts/auth";
+import { useNavigate } from 'react-router-dom';
+
 export default function FindThatJobPage() {
   // const [minSalary, setMinSalary] = useState("");
   // const [maxSalary, setMaxSalary] = useState("");
   // const [searchType, setSearchType] = useState("full-time");
-  
+  const navigate = useNavigate();
+
   const [jobs, setjobs] = useState([]);
-  const [filteredJobs, setFilteresJobs] = useState([]);
+  const [filteredJobs, setFilteredJobs] = useState([]);
   const [searchValue, setSearchValue] = useState({
     search: "",
     type:"all",
@@ -20,46 +23,55 @@ export default function FindThatJobPage() {
   const {currentUser} = useAuth()
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/jobs/${currentUser.id}`)
+    // fetch(`http://localhost:3000/api/jobs/${currentUser.id}`)
+    fetch(`http://localhost:3000/api/professionals/${currentUser.id}/jobs`)
       .then((response) => response.json())
       .then((data) => {
-        setjobs(data), setFilteresJobs(data);
+        setjobs(data), setFilteredJobs(data);
       });
   }, [currentUser]);
 
-  function toggleFollow (jobId, following, followingid){
-    
-    if(following){
-      fetch(`http://localhost:3000/api/following/professionals/${currentUser.id}/unfollow/${followingid}`, {
-        method: "DELETE",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
+  const handleSeeMoreClick = (id) => {
+    navigate(`${id}`);
+  };
+
+  function toggleFollow(jobId, following, followingid) {
+    console.log("jobid :" , jobId,"following: ", following, "followingid: ", followingid)
+    const url = following
+      ? `http://localhost:3000/api/following/professionals/${currentUser.id}/unfollow/${followingid}`
+      : `http://localhost:3000/api/following/professionals/${currentUser.id}/follow`;
+
+      console.log("MyURL: ",url)
   
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
+    const options = {
+      method: following ? "DELETE" : "POST",
+      headers: { "Content-Type": "application/json" },
+      body: !following ? JSON.stringify({ professionalid: currentUser.id, jobid: jobId, following: true }) : null,
+    };
+  
+    fetch(url, options)
+      .then((response) => response.json())
+      .then((data) => {
+          const updateJobs = jobs.map((job) => {
+          // console.log(job.id , jobId)
+          if (job.id == jobId) {
+            return { ...job, following: !following, followingid: following ? null : data[0].id };
+
+          }
+          return job;
         });
-    }else {
-      fetch(`http://localhost:3000/api/following/professionals/${currentUser.id}/follow`, {
-        method: "POST",
-        mode: "cors",
-        body: JSON.stringify({ professionalid: currentUser.id,  jobid: jobId, following: true }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-  
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-        });
-    }
-    
-  
+        console.log(updateJobs[0])
+        setjobs(updateJobs);
+        setFilteredJobs(updateJobs.filter((job) => {
+          const satisfiesSearch = job.title.toLowerCase().includes(searchValue.search.toLowerCase()) || job.company.toLowerCase().includes(searchValue.search.toLowerCase());
+          const satisfiesType = job.type.toLowerCase().includes(searchValue.type.toLowerCase()) || searchValue.type.toLowerCase() === "all";
+          const satisfiesMinSalary = parseInt(job.minsalary, 10) >= parseInt(searchValue.minSalary, 10) || searchValue.minSalary == "";
+          const satisfiesMaxSalary = parseInt(job.maxsalary, 10) <= parseInt(searchValue.maxSalary, 10) || searchValue.maxSalary == "";
+          return satisfiesSearch && satisfiesType && satisfiesMinSalary && satisfiesMaxSalary;
+        }));
+      });
   }
+  
 
  
 
@@ -82,9 +94,9 @@ export default function FindThatJobPage() {
       return satisfiesType && satisfiesSearch && satisfiesMinSalary && satisfiesMaxSalary;
     });
   
-    setFilteresJobs(newFilteredJobs);
+    setFilteredJobs(newFilteredJobs);
     // if (!newSearchValue.search && newSearchValue.type === "all" && newSearchValue.minSalary == "" && newSearchValue.maxSalary == "") {
-    //   setFilteresJobs(jobs);
+    //   setFilteredJobs(jobs);
     // } else {
     // }
     }
@@ -146,7 +158,7 @@ export default function FindThatJobPage() {
                 htmlFor="minSalary"
                 className="find-job-filters__label label mb-4"
               >
-                Min Salary
+                Salary Range
               </label>
               <div className="find-job-filters__salary-container">
                 <input
@@ -197,7 +209,7 @@ export default function FindThatJobPage() {
                     <button className="job-card__action-button job-card__action-button--follow" onClick={()=>toggleFollow(item.id, item.following, item.followingid)}>
                       { item.following ? "FOLLOWING" : "NOT FOLLOWING"}
                     </button>
-                    <button className="job-card__action-button job-card__action-button--see-more">
+                    <button className="job-card__action-button job-card__action-button--see-more" onClick={() => handleSeeMoreClick(item.id)}>
                       SEE MORE
                     </button>
                   </div>
