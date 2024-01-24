@@ -14,6 +14,7 @@ import JobPostingPage from "./company/pages/JobPostingPage.jsx";
 import CreateNewJobPage from "./company/pages/CreateNewJobPage.jsx";
 import CompanyProfilePage from "./company/pages/ProfilePage.jsx";
 import { useAuth } from "./contexts/auth.jsx";
+import AboutThatJobPage from "./candidate/pages/AboutThatJobPage.jsx";
 
 // import { useAuth } from "./contexts/auth.jsx";
 
@@ -85,6 +86,7 @@ function App() {
           <ProtectedRoute requiredUserType="professional" redirectTo="/login">
             <Routes>
               <Route path="find-that-job" element={<FindThatJobPage />} />
+              <Route path="find-that-job/:id" element={<AboutThatJobPage />} />
               <Route
                 path="your-applications"
                 element={<YourAplicationsPage />}

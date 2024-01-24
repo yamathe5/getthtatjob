@@ -47,6 +47,8 @@ font-family: "Montserrat", sans-serif;, sans-serif; */
   padding: 0.8rem 1.6rem;
   border: none;
   color: white;
+  cursor: pointer;
+
 }
 
 .headline-1 {
