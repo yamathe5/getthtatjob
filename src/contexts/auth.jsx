@@ -15,36 +15,60 @@ export const AuthProvider = ({ children }) => {
 
   // Simulate a login function
   const login = async (email, password, type) => {
-    await fetch("http://localhost:3000/api/" + type + "s/login", {
-      method: "POST",
-      mode: "cors",
-      body: JSON.stringify({ email: email, password: password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/${type}s/login`, {
+        method: "POST",
+        mode: "cors",
+        body: JSON.stringify({ email: email, password: password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      const data = await response.json();
+  
+      // Asegúrate de que el inicio de sesión fue exitoso antes de actualizar el estado
+      if (response.ok) {
         setCurrentUser(data);
         setUserType(type);
-      });
+      } else {
+        // Manejo de errores o inicio de sesión fallido
+        console.error(data.message);
+        // Aquí podrías establecer algún estado para mostrar un mensaje de error en la UI
+      }
+    } catch (error) {
+      console.error("Error al intentar iniciar sesión:", error);
+    }
   };
-
-  const signup = async ( body, type) => {
-    await fetch("http://localhost:3000/api/" + type + "s/signup", {
+  
+  // Simulate a signup function
+const signup = async (body, type) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/${type}s/signup`, {
       method: "POST",
       mode: "cors",
       body: JSON.stringify(body),
       headers: {
         "Content-type": "application/json",
       },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setCurrentUser(data);
-        setUserType(type);
-      });
-  };
+    });
+
+    const data = await response.json();
+
+    // Asegúrate de que el registro fue exitoso antes de actualizar el estado
+    if (response.ok) {
+      setCurrentUser(data);
+      setUserType(type);
+    } else {
+      // Manejo de errores o registro fallido
+      console.error(data.message);
+      // Aquí podrías establecer algún estado para mostrar un mensaje de error en la UI
+    }
+  } catch (error) {
+    console.error("Error al intentar registrar:", error);
+  }
+};
+
 
   // Simulate a logout function
   const logout = () => {
