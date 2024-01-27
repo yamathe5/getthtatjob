@@ -6,9 +6,18 @@ import { useAuth } from "../../contexts/auth";
 import { formatDistanceToNow } from "date-fns";
 
 function TimeAgo({ dateString }) {
-  const date = new Date(dateString);
+  const date = new Date(dateString ); // Añade 'Z' para asegurar interpretación como UTC
   return `${formatDistanceToNow(date, { addSuffix: true })}`;
 }
+
+function formatDate(){
+
+  var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+  var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+  
+  return localISOTime  // => '2015-01-26T06:40:36.181'
+}
+
 
 export default function AboutThatJobPage() {
   const [job, setJob] = useState(null);
@@ -16,7 +25,7 @@ export default function AboutThatJobPage() {
   const { currentUser } = useAuth();
   const [toggle, setToggle] = useState(false);
   const [inputValues, setInputValues] = useState({
-    professionalexperience: "",
+    professionalexperience: currentUser.experience,
     whyareyouinterested: "",
   });
 
@@ -28,6 +37,7 @@ export default function AboutThatJobPage() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        console.log(currentUser)
         setJob(data); // Aquí actualizamos el estado con los datos de la API
       })
       .catch((error) => {
@@ -51,7 +61,7 @@ export default function AboutThatJobPage() {
         professionalid: currentUser.id,
         professionalexperience: inputValues.professionalexperience,
         whyareyouinterested: inputValues.whyareyouinterested,
-        date: new Date().toISOString(),
+        date: formatDate(),
         status: "waiting",
       }),
       headers: {
@@ -129,7 +139,7 @@ export default function AboutThatJobPage() {
             <div className="about-job__attribute">
               <p className="about-job__attribute-name mb-4">Salary</p>
               <p className="about-job__attribute-value">
-                {job[0].minsalary} - {job[0].maxsalary}
+                ${job[0].minsalary} - ${job[0].maxsalary}
               </p>
             </div>
           </div>
@@ -144,7 +154,7 @@ export default function AboutThatJobPage() {
               <label className="label" htmlFor="">
                 Professional experience (taken from your profile)
               </label>
-              <input
+              <textarea
                 className="input mb-16"
                 type="text"
                 value={inputValues.professionalexperience}
@@ -156,7 +166,7 @@ export default function AboutThatJobPage() {
               <label className="label mb-4" htmlFor="">
                 Why are you interested in working at The company name SA
               </label>
-              <input
+              <textarea
                 className="input mb-4"
                 type="text"
                 value={inputValues.whyareyouinterested}
