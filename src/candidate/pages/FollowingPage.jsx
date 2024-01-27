@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function Following() {
-  // const url = `http://localhost:3000/api/following/professionals/2/following`
+  // const url = `https://getthatjobbaackend.onrender.com/api/following/professionals/2/following`
   const { currentUser } = useAuth();
   const [jobs, setJobs] = useState([]); // Correct destructuring
   const [companys, setCompanys] = useState([]); // Correct destructuring
@@ -18,7 +18,7 @@ export default function Following() {
 
   useEffect(() => {
     fetch(
-      `http://localhost:3000/api/following/professionals/${currentUser.id}/following`
+      `https://getthatjobbaackend.onrender.com/api/following/professionals/${currentUser.id}/following`
     )
       .then((resp) => resp.json())
       .then((data) => {
@@ -35,7 +35,7 @@ export default function Following() {
 
   function handleOnClickRemoveFollow(e, id, type) {
     console.log("Removing follow with id:", id);
-    fetch(`http://localhost:3000/api/following/professionals/${currentUser.id}/unfollow/${id}`, {
+    fetch(`https://getthatjobbaackend.onrender.com/api/following/professionals/${currentUser.id}/unfollow/${id}`, {
       method: "DELETE",
     })
     .then(response => {

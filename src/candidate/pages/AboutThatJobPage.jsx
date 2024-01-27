@@ -32,7 +32,7 @@ export default function AboutThatJobPage() {
   useEffect(() => {
     // Asegúrate de usar el id en la URL del endpoint
     fetch(
-      `http://localhost:3000/api/professionals/${currentUser.id}/jobs/${id}`
+      `https://getthatjobbaackend.onrender.com/api/professionals/${currentUser.id}/jobs/${id}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -53,7 +53,7 @@ export default function AboutThatJobPage() {
   function handleSendApplication() {
     console.log(inputValues);
 
-    fetch(`http://localhost:3000/api/applications/jobs/${id}/apply`, {
+    fetch(`https://getthatjobbaackend.onrender.com/api/applications/jobs/${id}/apply`, {
       method: "POST",
       mode: "cors",
       body: JSON.stringify({

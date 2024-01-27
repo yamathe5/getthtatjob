@@ -50,7 +50,7 @@ export default function MyJobPostingPage() {
   function handleUpdateStatus(e, applicationId, newStatus) {
     e.stopPropagation(); // Detiene la propagación del evento
     if(newStatus === "stop") return 
-    fetch(`http://localhost:3000/api/applications/${applicationId}`, {
+    fetch(`https://getthatjobbaackend.onrender.com/api/applications/${applicationId}`, {
       method: "PATCH", // Usar PUT o PATCH dependiendo de la operación deseada y la API
       headers: {
         "Content-Type": "application/json", // Asegurarse de que el servidor espera JSON
@@ -138,12 +138,12 @@ export default function MyJobPostingPage() {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/companys/${currentUser.id}/jobs/${id}`)
+    fetch(`https://getthatjobbaackend.onrender.com/api/companys/${currentUser.id}/jobs/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setJob(data);
         return fetch(
-          `http://localhost:3000/api/applications/jobs/${id}/candidates`
+          `https://getthatjobbaackend.onrender.com/api/applications/jobs/${id}/candidates`
         );
       })
       .then((res) => res.json())

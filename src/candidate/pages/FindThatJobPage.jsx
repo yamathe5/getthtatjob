@@ -23,8 +23,8 @@ export default function FindThatJobPage() {
   const {currentUser} = useAuth()
 
   useEffect(() => {
-    // fetch(`http://localhost:3000/api/jobs/${currentUser.id}`)
-    fetch(`http://localhost:3000/api/professionals/${currentUser.id}/jobs`)
+    // fetch(`https://getthatjobbaackend.onrender.com/api/jobs/${currentUser.id}`)
+    fetch(`https://getthatjobbaackend.onrender.com/api/professionals/${currentUser.id}/jobs`)
       .then((response) => response.json())
       .then((data) => {
         setjobs(data), setFilteredJobs(data);
@@ -37,8 +37,8 @@ export default function FindThatJobPage() {
 
   function toggleFollow(jobId, following, followingid) {
     const url = following
-      ? `http://localhost:3000/api/following/professionals/${currentUser.id}/unfollow/${followingid}`
-      : `http://localhost:3000/api/following/professionals/${currentUser.id}/follow`;
+      ? `https://getthatjobbaackend.onrender.com/api/following/professionals/${currentUser.id}/unfollow/${followingid}`
+      : `https://getthatjobbaackend.onrender.com/api/following/professionals/${currentUser.id}/follow`;
 
   
     const options = {

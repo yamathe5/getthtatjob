@@ -44,7 +44,7 @@ export default function CreateNewJobPage() {
     // Limpia el mensaje de error si la validación es exitosa
     setErrorMessage("");
 
-    await fetch("http://localhost:3000/api/jobs", {
+    await fetch("https://getthatjobbaackend.onrender.com/api/jobs", {
       method: "POST",
       mode: "cors",
       body: JSON.stringify({

@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
   // Simulate a login function
   const login = async (email, password, type) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/${type}s/login`, {
+      const response = await fetch(`https://getthatjobbaackend.onrender.com/api/${type}s/login`, {
         method: "POST",
         mode: "cors",
         body: JSON.stringify({ email: email, password: password }),
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
   // Simulate a signup function
 const signup = async (body, type) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/${type}s/signup`, {
+    const response = await fetch(`https://getthatjobbaackend.onrender.com/api/${type}s/signup`, {
       method: "POST",
       mode: "cors",
       body: JSON.stringify(body),

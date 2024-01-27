@@ -80,7 +80,7 @@ export default function JobPostingPage() {
   }, [filter, jobs]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/companys/${currentUser.id}/jobs`)
+    fetch(`https://getthatjobbaackend.onrender.com/api/companys/${currentUser.id}/jobs`)
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data)
@@ -100,7 +100,7 @@ export default function JobPostingPage() {
   }, []);
 
   function updateJobCloseStatus(id, jobToUpdate, newCloseStatus) {
-    fetch(`http://localhost:3000/api/jobs/${id}`, {
+    fetch(`https://getthatjobbaackend.onrender.com/api/jobs/${id}`, {
       method: "PUT", // o PUT dependiendo de tu API
       headers: {
         "Content-Type": "application/json",

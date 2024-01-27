@@ -35,7 +35,7 @@ export default function YourApplicationsPage() {
 
   useEffect(() => {
     fetch(
-      `http://localhost:3000/api/applications/professionals/${currentUser.id}/applications`
+      `https://getthatjobbaackend.onrender.com/api/applications/professionals/${currentUser.id}/applications`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -47,7 +47,7 @@ export default function YourApplicationsPage() {
 
   function handleDeclineApplication(applicationId) {
     console.log(applicationId);
-    fetch(`http://localhost:3000/api/applications/professionals/${currentUser.id}/applications/${applicationId}`, {
+    fetch(`https://getthatjobbaackend.onrender.com/api/applications/professionals/${currentUser.id}/applications/${applicationId}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     })
