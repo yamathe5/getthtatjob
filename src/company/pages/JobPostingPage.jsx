@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import "./job-posting-page.css";
 import { useAuth } from "../../contexts/auth";
+
+
+import { useNavigate } from 'react-router-dom';
+
 function formateDate(date) {
   const newDate = new Date(date);
 
@@ -18,23 +22,44 @@ function formateDate(date) {
 
 // CLOSE
 
+
+
+
 export default function JobPostingPage() {
   const [filter, setFilter] = useState("all");
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
 
   const {currentUser} = useAuth();
-
+  const navigate = useNavigate();
+  const handleShowClick = (jobId) => {
+    navigate(`/company/job-posting/${jobId}`);
+  };
 
   function handleToggleButtonLocal(e, id) {
-    // ESTO DEBE CAMBIAR EL ESTADO TAMBIEN EN LA BASE DE DATOS
-    setJobs((prevJobs) =>
-      prevJobs.map((job) =>
-        job.id == id ? { ...job, close: !job.close } : job
-      )
-    );
+    setJobs((prevJobs) => {
+      // Primero, mapear y cambiar el estado 'close' del trabajo con el ID correspondiente.
+      const updatedJobs = prevJobs.map((job) =>
+        job.id === id ? { ...job, close: !job.close } : job
+      );
+  
+      // Luego, ordenar los trabajos en base al estado 'close'.
+      const sortedJobs = updatedJobs.sort((a, b) => {
+        if (a.close && !b.close) {
+          return 1;
+        } else if (!a.close && b.close) {
+          return -1;
+        }
+        return 0;
+      });
+  
+      // Finalmente, devolver los trabajos ya actualizados y ordenados para actualizar el estado.
+      return sortedJobs;
+    });
+  
+    // Aquí deberías agregar la lógica para actualizar el estado en la base de datos.
   }
-
+  
   function handleToggleButton(e, id) {
     // Encuentra el trabajo actual por ID
     const jobToUpdate = jobs.find((job) => job.id === id);
@@ -58,6 +83,17 @@ export default function JobPostingPage() {
     fetch(`http://localhost:3000/api/companys/${currentUser.id}/jobs`)
       .then((resp) => resp.json())
       .then((data) => {
+        console.log(data)
+        data.sort((a, b) => {
+          if (a.close ) {
+            return 1;
+          }
+          else if (b.close ) {
+            return -1; 
+          }
+          return 0;
+        });
+        
         setJobs(data);
         setFilteredJobs(data);
       });
@@ -140,7 +176,7 @@ export default function JobPostingPage() {
             </div>
           </div>
           <h2 className="job-posting-page__filter__count headline-6 mb-8">
-            4 job postings found
+            Jobs postings found
           </h2>
           <article className="job-postings__container">
             {filteredJobs &&
@@ -164,7 +200,7 @@ export default function JobPostingPage() {
                     <div className="job-posting__statistics">
                       <p> {formateDate(item.posteddate)} </p>
                       <p>
-                        {item.candidates} <br />
+                        {item.count_candidates} <br />
                         Total Candidates
                       </p>
                       <p>
@@ -173,8 +209,9 @@ export default function JobPostingPage() {
                     </div>
 
                     <div className="job-posting__actions">
-                      <button className="job-posting__button job-posting__button--show">
+                      <button className="job-posting__button job-posting__button--show" onClick={()=> handleShowClick(item.id)}>
                         O SHOW
+
                       </button>
                       <button
                         className={
