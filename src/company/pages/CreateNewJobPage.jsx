@@ -3,12 +3,15 @@ import Sidebar from "../components/Sidebar";
 import { useState } from "react";
 import { useAuth } from "../../contexts/auth";
 
-
 export default function CreateNewJobPage() {
-  const {currentUser} = useAuth();
+  const { currentUser } = useAuth();
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [inputs, setInputs] = useState({
     title: "",
     category: "",
+    maxsalary: "",
+    minsalary: "",
     type: "Full-time",
     aboutjob: "",
     mandatoryrequirements: "",
@@ -30,24 +33,40 @@ export default function CreateNewJobPage() {
     const now = new Date();
     const dateTimeString = now.toISOString();
 
+    if (parseInt(inputs.minsalary) > parseInt(inputs.maxsalary)) {
+      // Configura el mensaje de error y detén la ejecución de la función
+      setErrorMessage(
+        "The minimum salary must be less than the maximum salary."
+      );
+      return; // Detén la ejecución si la validación falla
+    }
+
+    // Limpia el mensaje de error si la validación es exitosa
+    setErrorMessage("");
+
     await fetch("http://localhost:3000/api/jobs", {
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
         ...inputs,
-        salaryrange: "1000",
         company: currentUser.company,
         aboutcompany: currentUser.about,
         posteddate: dateTimeString,
-        candidates: 4,
-        track: 5,
-        close: true,
-        companyid: currentUser.id
+        candidates: 0,
+        track: 0,
+        close: false,
+        companyid: currentUser.id,
       }),
       headers: {
         "Content-Type": "application/json",
       },
-    }).then(res => res.json()).then(data => console.log(data));
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((error) => {
+        console.error("Error posting job:", error);
+        setErrorMessage("An error occurred while posting the job.");
+      });
   }
 
   function handleInputsChange(e, inputType) {
@@ -68,6 +87,11 @@ export default function CreateNewJobPage() {
         </header>
         <form className="create-job-form">
           <section className="create-job-form__section">
+            {errorMessage && (
+              <p className="create-job-form__error-message headline-6">
+                {errorMessage}
+              </p>
+            )}
             <h2 className="create-job-form__subtitle headline-5 mb-8">
               Main information
             </h2>
@@ -101,6 +125,31 @@ export default function CreateNewJobPage() {
               <option value="dog">Full-time</option>
               <option value="cat">Part-time</option>
             </select>
+            <label
+              htmlFor="minsalary"
+              className="create-job-form__label label mb-4"
+            >
+              Type
+            </label>
+            <div className="imput-salary-container">
+              <input
+                type="number"
+                id="minsalary"
+                className="create-job-form__input input mb-8"
+                value={inputs.minsalary}
+                onChange={(e) => handleInputsChange(e, "minsalary")}
+              />
+
+              <div className="imput-salary-container__divider mb-8"></div>
+
+              <input
+                type="number"
+                id="maxsalary"
+                className="create-job-form__input input mb-8"
+                value={inputs.maxsalary}
+                onChange={(e) => handleInputsChange(e, "maxsalary")}
+              />
+            </div>
             {/* Repeat for other fields like Job Category, Type, Salary Range */}
           </section>
           <section className="create-job-form__section">
