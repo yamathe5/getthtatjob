@@ -178,7 +178,7 @@ export default function FindThatJobPage() {
             </div>
           </div>
         </header>
-        <h3 className="job-cards__title headline-6 mb-8">12 jobs for you</h3>
+        <h3 className="job-cards__title headline-6 mb-8"> Jobs for you</h3>
         <section className="job-cards">
           {/* Repite este bloque para cada tarjeta de trabajo */}
           {filteredJobs &&

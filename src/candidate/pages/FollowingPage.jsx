@@ -81,7 +81,7 @@ export default function Following() {
         </header>
         <section className="following-content">
           <p className="following-header__subtitle headline-6 mb-8">
-            You are following 2 jobs
+            Jobs Following
           </p>
           <div className="following-content__container mb-16">
             {jobs &&
@@ -121,10 +121,9 @@ export default function Following() {
               })}
           </div>
           <p className="following-header__subtitle headline-6 mb-8">
-            You are following 1 company
+            Company following
           </p>
-          <div className="mb-16">
-            <div className="following-card">
+          <div className="following-content__container mb-16">
               {companys &&
                 companys.map((item, index) => {
                   return (
@@ -158,7 +157,6 @@ export default function Following() {
                     </div>
                   );
                 })}
-            </div>
           </div>
           {/* Repeat the .following-card block for each followed company */}
         </section>
