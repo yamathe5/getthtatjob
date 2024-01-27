@@ -2,7 +2,7 @@ import Header from "../componentes/Header";
 import { useState } from "react";
 import "./login-page.css";
 import { useAuth } from "../contexts/auth";
-
+import welcome from "../assets/Welcomeback.png"
 
 
 export default function LoginPage() {
@@ -99,7 +99,7 @@ export default function LoginPage() {
         <div className="illustration">
           {/* Asumiendo que tienes la imagen guardada en la carpeta public */}
           <img
-            src="/path-to-your-illustration.png"
+            src={welcome}
             alt="A professional waving"
             className="illustration__image"
           />
