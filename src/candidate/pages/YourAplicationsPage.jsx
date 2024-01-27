@@ -7,8 +7,8 @@ import { formatDistanceToNow } from "date-fns";
 import { useAuth } from "../../contexts/auth";
 
 function TimeAgo({ dateString }) {
-  const date = new Date(dateString);
-  return `${formatDistanceToNow(date, { addSuffix: true })}`;
+  const date = new Date(`${dateString}`);
+  return formatDistanceToNow(date, { addSuffix: true });
 }
 
 function formatStatus(status) {
@@ -180,7 +180,7 @@ export default function YourApplicationsPage() {
           </div>
         </header>
         <h2 className="applications-list__count headline-6 mb-8">
-          4 applications found
+           Applications found
         </h2>
         <section className="applications-list">
           {filteredApplications &&
