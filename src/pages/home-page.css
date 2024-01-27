@@ -1,122 +1,203 @@
 /* Header styles */
 .header {
-    background-color: #ffffff; /* Replace with your desired color */
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .header__logo {
-    font-size: 24px;
-    font-weight: bold;
-    /* Add other styles such as font family or colors */
-  }
-  
-  .header__buttons {
-    /* Style for the buttons container */
-  }
-  
-  .header__button {
-    padding: 10px 20px;
-    margin-left: 10px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .header__button--signup {
-    background-color: #4CAF50; /* Replace with your desired color */
-    color: white;
-  }
-  
-  .header__button--login {
-    background-color: #555555; /* Replace with your desired color */
-    color: white;
-  }
-  
-  .header__button:hover {
-    /* hover effect for buttons */
-    background-color: #333333;
-  }
-  
-  /* Main content styles */
+  background-color: #ffffff; /* Replace with your desired color */
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__logo {
+  font-size: 24px;
+  font-weight: bold;
+  /* Add other styles such as font family or colors */
+}
+
+.header__buttons {
+  /* Style for the buttons container */
+}
+
+.header__button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.header__button--signup {
+  background-color: #4caf50; /* Replace with your desired color */
+  color: white;
+}
+
+.header__button--login {
+  background-color: #555555; /* Replace with your desired color */
+  color: white;
+}
+
+.header__button:hover {
+  /* hover effect for buttons */
+  background-color: #333333;
+}
+
+/* Main content styles */
+.main {
+  padding: 20px;
+}
+
+.job-offer,
+.job-search {
+  margin-bottom: 40px;
+}
+
+.job-offer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 8.4rem;
+}
+
+.job-offer__title,
+.job-search__title {
+  color: #333333; /* Replace with your desired color */
+  margin-bottom: 20px;
+  text-align: center;
+  max-width: 50rem;
+  margin-bottom: 3.2rem;
+}
+
+.job-offer__description,
+.job-search__description {
+  color: #666666; /* Replace with your desired color */
+  margin-bottom: 20px;
+  text-align: center;
+  max-width: 72rem;
+  margin-bottom: 3.2rem;
+}
+
+.job-offer__button {
+  background-color: #008cba; /* Replace with your desired color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  padding: 1.6rem 2.4rem 1.6rem 2.4rem;
+  border-radius: 1.6rem;
+  gap: 0.8rem;
+  background: #f48fb1;
+  margin-bottom: 3.2rem;
+}
+
+.job-offer__button:hover {
+  background-color: #f3759f;
+}
+.job-offer__image {
+  width: 80%;
+  max-width: 100rem;
+  height: auto;
+}
+
+/*  */
+
+.job-search {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.job-search div {
+  background-color: #bf5f82;
+  padding: 6.4rem 12rem;
+}
+.job-search__title {
+  text-align: left;
+  color: white;
+}
+
+.job-search__description {
+  text-align: left;
+  color: white;
+}
+
+.job-search__image{
+  padding: 10rem;
+}
+
+
+/* Team styles */
+.team {
+  padding: 20px 0;
+  display: flex ;
+  flex-direction: column;
+  align-items: center;
+}
+
+.team__title {
+  color: #333333; /* Replace with your desired color */
+  margin-bottom: 20px;
+  color:#BF5F82 ;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.team-member {
+  margin-bottom: 20px;
+}
+
+.team-member__image {
+  width: 18rem; /* Adjust as needed */
+  height: 18rem; /* Adjust as needed */
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.team-member__name {
+  color: #333333; /* Replace with your desired color */
+  margin-bottom: 5px;
+}
+
+.team-member__role {
+  color: #777777; /* Replace with your desired color */
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+.team-member__social-media a {
+  width: 4rem;
+  height: 4rem;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  padding: auto;
+}
+
+.team-member__social-media {
+  /* Style for social media icons */
+  height: 2.8rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap:1.2rem;
+}
+
+.team-member__social-media a, .team-member__social-media a i {
+  width: 2.8rem;
+  height: 2.8rem;
+  font-size: 2.8rem;
+}
+
+/* Add media queries for responsive design */
+@media (max-width: 768px) {
+  .header,
   .main {
-    padding: 20px;
+    padding: 10px;
   }
-  
-  .job-offer, .job-search {
-    margin-bottom: 40px;
+
+  .header__button {
+    padding: 5px 10px;
   }
-  
-  .job-offer__title, .job-search__title {
-    color: #333333; /* Replace with your desired color */
-    margin-bottom: 20px;
-  }
-  
-  .job-offer__description, .job-search__description {
-    color: #666666; /* Replace with your desired color */
-    margin-bottom: 20px;
-  }
-  
-  .job-offer__button {
-    background-color: #008CBA; /* Replace with your desired color */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .job-offer__button:hover {
-    background-color: #005f73;
-  }
-  
-  /* Team styles */
-  .team {
-    padding: 20px 0;
-  }
-  
-  .team__title {
-    color: #333333; /* Replace with your desired color */
-    margin-bottom: 20px;
-  }
-  
-  .team-member {
-    margin-bottom: 20px;
-  }
-  
-  .team-member__image {
-    width: 100px; /* Adjust as needed */
-    height: 100px; /* Adjust as needed */
-    border-radius: 50%;
-    margin-bottom: 10px;
-  }
-  
-  .team-member__name {
-    color: #333333; /* Replace with your desired color */
-    margin-bottom: 5px;
-  }
-  
-  .team-member__role {
-    color: #777777; /* Replace with your desired color */
-    font-size: 14px;
-  }
-  
-  .team-member__social-media {
-    /* Style for social media icons */
-  }
-  
-  /* Add media queries for responsive design */
-  @media (max-width: 768px) {
-    .header, .main {
-      padding: 10px;
-    }
-  
-    .header__button {
-      padding: 5px 10px;
-    }
-  
-    /* Adjust other styles for mobile view */
-  }
-  
+
+  /* Adjust other styles for mobile view */
+}

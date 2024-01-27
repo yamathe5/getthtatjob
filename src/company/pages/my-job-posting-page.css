@@ -1,0 +1,376 @@
+.my-job-posting-page {
+  display: flex;
+}
+.my-job-posting-main {
+  padding: 3.2rem 0rem;
+  background: #f5f5f6;
+  width: calc(100% - 24rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.my-application-card-container {
+  width: 80%;
+  background-color: white;
+  border: 1px solid #e1e2e1;
+  box-shadow: 0px 2px 8px 0px #00000033;
+  padding: 1.6rem;
+  border-radius: 0.8rem;
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+  overflow: hidden;
+  max-width: 94.4rem;
+  min-height: 9.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.my-job-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.my-job__info {
+  display: flex;
+  flex-direction: column;
+}
+.my-job-posting-header {
+  width: 80%;
+}
+.my-job-posting-header__title {
+  /* Estilos para el título */
+  font-family: "Montserrat", sans-serif;
+  font-size: 3.4rem;
+  font-weight: 400;
+  line-height: 4.1rem;
+  letter-spacing: 0.25px;
+  text-align: left;
+}
+.my-job__job-data {
+  font-family: "Inter";
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.6rem;
+  letter-spacing: 0.4px;
+  text-align: left;
+  color: #8e8e8e;
+}
+.my-job__status {
+  display: flex;
+  gap: 0.4rem;
+  font-family: "Inter";
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.6rem;
+  letter-spacing: 0.4px;
+  text-align: center;
+}
+.my-job__detail {
+  max-width: 8rem;
+}
+.my-job__detail--candidates {
+  color: #f48fb1;
+}
+.my-job-posting-page__filter {
+  padding: 0.8rem;
+  width: 80%;
+}
+.application__actions {
+  display: flex;
+  gap: 2.2rem;
+}
+.application__actions--show-btn {
+  padding: 8px 16px 8px 16px;
+  border-radius: 16px;
+  background-color: transparent;
+  border: none;
+  color: #616161;
+}
+.application__actions--close-btn {
+  padding: 8px 16px 8px 16px;
+  border-radius: 16px;
+  border: none;
+  background-color: #bf5f82;
+  color: white;
+}
+.my-job-posting-page__filter__filter {
+}
+.my-job-posting-page__filter__count {
+}
+.my-job-posting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #e1e2e1;
+  padding: 1.6rem;
+  box-shadow: 0px 2px 8px 0px #00000033;
+  border-radius: 0.8rem;
+}
+
+.my-job-posting__title {
+  width: 25rem;
+}
+.my-job-posting__info {
+  font-family: "Inter";
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.6rem;
+  letter-spacing: 0.4px;
+  text-align: left;
+  color: #8e8e8e;
+}
+
+.my-job-posting__statistics {
+  display: flex;
+  gap: 0.4rem;
+  font-family: "Inter";
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.6rem;
+  letter-spacing: 0.4px;
+  text-align: center;
+  color: #616161;
+}
+
+.my-job-posting__statistics p {
+  width: 8rem;
+}
+
+.my-job-posting__actions {
+  display: flex;
+}
+
+.my-job-posting__button {
+  padding: 8px 16px;
+  /* padding: 16px 8px; */
+  border-radius: 1.6rem;
+  border: none;
+  font-family: "Inter";
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 2.4rem;
+  letter-spacing: 1.25px;
+}
+
+.my-job-posting__button--show {
+  color: #616161;
+  margin-right: 1.6rem;
+}
+
+.my-job-posting__button--close {
+  background: #bf5f82;
+  color: white;
+}
+.my-job-posting__button--closed {
+  background: #e1e2e1;
+  color: #8e8e8e;
+}
+
+.my-job-card__extra-content {
+  display: none;
+}
+
+.my-job-card__extra-content--show {
+  display: flex;
+  flex-direction: column;
+}
+
+.my-job-card__extra-content__title {
+  font-family: "Montserrat";
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 2rem;
+  letter-spacing: 0.15000000596046448px;
+  text-align: left;
+  color: #bf5f82;
+}
+
+.my-job-card__extra-content__descriptions {
+  font-family: "Inter";
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 2rem;
+  letter-spacing: 0.25px;
+  text-align: left;
+  color: #373737;
+}
+
+/* 
+ */
+
+.my-candidates-card-container {
+  background-color: white;
+  border: 1px solid #e1e2e1;
+  box-shadow: 0px 2px 8px 0px #00000033;
+  padding: 1.6rem;
+  border-radius: 0.8rem;
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+  overflow: hidden;
+  max-width: 94.4rem;
+  min-height: 9.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.my-job-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.my-job__info {
+  display: flex;
+  flex-direction: column;
+}
+.my-job-posting-header {
+  width: 80%;
+}
+.my-job-posting-header__title {
+  /* Estilos para el título */
+  font-family: "Montserrat", sans-serif;
+  font-size: 3.4rem;
+  font-weight: 400;
+  line-height: 4.1rem;
+  letter-spacing: 0.25px;
+  text-align: left;
+}
+.candidate-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.candidate__job-name{
+    color: #373737;
+}
+.candidate__company-title{
+    color:#616161;
+font-family: "Montserrat";
+font-size: 1.4rem;
+font-weight: 500;
+line-height: 1.8rem;
+letter-spacing: 0.1px;
+text-align: left;
+
+}
+.candidate__details {
+  display: flex;
+  flex-direction: column;
+  font-family: "Inter";
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.6rem;
+  letter-spacing: 0.4px;
+  text-align: left;
+  color: #8e8e8e;
+}
+
+.candidate__status {
+  display: flex;
+  gap: 0.4rem;
+}
+.candidate__status__info {
+  width: 8rem;
+  font-family: Inter;
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.6rem;
+  letter-spacing: 0.4px;
+  text-align: center;
+  color: #616161;
+}
+.candidate__actions-button {
+  padding: 0.8rem 1.6rem 0.8rem 1.6rem;
+  border-radius: 1.6rem;
+  border: 1px solid #f48fb1;
+  color: #616161;
+  background-color: transparent;
+}
+.candidate__application{
+
+}
+
+.candidate-application__last-update{
+font-family: "Inter";
+font-size: 1.0rem;
+font-weight: 400;
+line-height: 1.2rem;
+letter-spacing: 1.5px;
+text-align: left;
+color: #616161;
+
+}
+
+.candidate-application__title{
+font-family: "Montserrat";
+font-size: 1.6rem;
+font-weight: 400;
+line-height: 2.0rem;
+letter-spacing: 0.15px;
+text-align: left;
+color: #BF5F82;
+
+}
+
+.candidate-application__text{
+font-family: "Inter";
+font-size: 1.4rem;
+font-weight: 400;
+line-height: 2.0rem;
+letter-spacing: 0.25px;
+text-align: left;
+color: #373737;
+
+}
+
+.candidate__application__extra-content{
+    display: none;
+
+}
+.candidate__application__extra-content--show{
+display: flex;
+flex-direction: column;
+}
+.candidate-application__button{
+    
+padding: 0.8rem 1.6rem 0.8rem 1.6rem;
+border-radius: 1.6rem;
+border: 1px;
+gap: 0.8rem;
+border: 1px solid #F48FB1;
+color: #616161;
+background-color: transparent;
+align-self: center;
+}
+
+.my-job-posting-page__filter-input {
+    margin-right: 0.4rem;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+  }
+  .my-job-posting-page__filter-input:checked {
+    border-color: #f48fb1;
+  }
+  
+  .my-job-posting-page__filter-input:checked::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background-color: #f48fb1;
+    border-radius: 50%;
+  }
+  
+  .applications-filter__label {
+    margin-bottom: 0;
+    margin-right: 1.2rem;
+  }
