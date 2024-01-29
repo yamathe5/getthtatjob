@@ -31,11 +31,17 @@
   padding-left: 1.6rem;
   text-decoration: none;
   color: #616161;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
 
 }
 .company-sidebar__link--active {
     background-color: #F5F5F6;
     color: #373737;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
 
 }
 

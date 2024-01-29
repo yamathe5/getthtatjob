@@ -43,6 +43,7 @@ export const AuthProvider = ({ children }) => {
   
   // Simulate a signup function
 const signup = async (body, type) => {
+  console.log(body, type)
   try {
     const response = await fetch(`https://getthatjobbaackend.onrender.com/api/${type}s/signup`, {
       method: "POST",
@@ -54,7 +55,7 @@ const signup = async (body, type) => {
     });
 
     const data = await response.json();
-
+    console.log(response)
     // Asegúrate de que el registro fue exitoso antes de actualizar el estado
     if (response.ok) {
       setCurrentUser(data);

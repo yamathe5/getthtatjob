@@ -72,6 +72,7 @@ export default function AboutThatJobPage() {
         if (!res.ok) {
           throw new Error("Network response was not ok");
         }
+        console.log(res)
         return res.json();
       })
       .then((data) => console.log(data))

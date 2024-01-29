@@ -5,25 +5,51 @@ import Logo from "../../assets/logo.png";
 
 import { formatDistanceToNow } from "date-fns";
 import { useAuth } from "../../contexts/auth";
-
+import mailIcon from "../../assets/mail_icon.png";
+import waitingIcon from "../../assets/waiting_circle_icon.png";
+import reviewInprogressIcon from "../../assets/review_inprogress_icon.png";
+import reviewFinishedIcon from "../../assets/review_finished_icon.png";
+import reviewDeclinedIcon from "../../assets/declined_review_icon.png";
 function TimeAgo({ dateString }) {
   const date = new Date(`${dateString}`);
   return formatDistanceToNow(date, { addSuffix: true });
 }
 
 function formatStatus(status) {
-  if (status == "waiting") {
-    return "Waiting for review";
-  } else if (status == "inprogress") {
-    return "Review in progress";
-  } else if (status == "finished") {
-    return "Review finished";
-  } else if (status == "delined") {
-    return "Review decined on =======";
-  } else {
-    return "Status not valid";
+  switch (status) {
+    case "waiting":
+      return (
+        <>
+          <img src={waitingIcon} alt="Waiting" />
+          Waiting for review
+        </>
+      );
+    case "inprogress":
+      return (
+        <>
+          <img src={reviewInprogressIcon} alt="In Progress" />
+          Review in progress
+        </>
+      );
+    case "finished":
+      return (
+        <>
+          <img src={reviewFinishedIcon} alt="Finished" />
+          Review finished
+        </>
+      );
+    case "declined":
+      return (
+        <>
+          <img src={reviewDeclinedIcon} alt="Declined" />
+          Review declined
+        </>
+      );
+    default:
+      return "Status not valid";
   }
 }
+
 
 export default function YourApplicationsPage() {
   // Estado para los filtros de las aplicaciones
@@ -47,31 +73,37 @@ export default function YourApplicationsPage() {
 
   function handleDeclineApplication(applicationId) {
     console.log(applicationId);
-    fetch(`https://getthatjobbaackend.onrender.com/api/applications/professionals/${currentUser.id}/applications/${applicationId}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    })
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
+    fetch(
+      `https://getthatjobbaackend.onrender.com/api/applications/professionals/${currentUser.id}/applications/${applicationId}`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
       }
-      return res.json();
-    })
-    .then(() => {
-      // Aquí actualizamos el estado para reflejar la eliminación de la aplicación
-      console.log(applications, applicationId)
-      const updatedApplications = applications.filter(application => application.applicationsid !== applicationId);
-      setApplications(updatedApplications);
-      settFilteredApplications(updatedApplications.filter(application => {
-        // Puedes necesitar ajustar este filtro si tienes alguna lógica adicional para los `filteredApplications`
-        return filter === "all" || application.status === filter;
-      }));
-    })
-    .catch((error) => {
-      console.error("Error during unfollow:", error);
-    });
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(() => {
+        // Aquí actualizamos el estado para reflejar la eliminación de la aplicación
+        console.log(applications, applicationId);
+        const updatedApplications = applications.filter(
+          (application) => application.applicationsid !== applicationId
+        );
+        setApplications(updatedApplications);
+        settFilteredApplications(
+          updatedApplications.filter((application) => {
+            // Puedes necesitar ajustar este filtro si tienes alguna lógica adicional para los `filteredApplications`
+            return filter === "all" || application.status === filter;
+          })
+        );
+      })
+      .catch((error) => {
+        console.error("Error during unfollow:", error);
+      });
   }
-  
 
   function handleCardClick(clickedId) {
     setExpandedCard(expandedCard === clickedId ? null : clickedId);
@@ -180,7 +212,7 @@ export default function YourApplicationsPage() {
           </div>
         </header>
         <h2 className="applications-list__count headline-6 mb-8">
-           Applications found
+          {filteredApplications.length} Applications found
         </h2>
         <section className="applications-list">
           {filteredApplications &&
@@ -193,7 +225,11 @@ export default function YourApplicationsPage() {
                   key={index}
                   onClick={() => handleCardClick(application.id)}
                 >
-                  <div className={`application-card ${expandedCard === application.id ? "mb-16" : ""}`}>
+                  <div
+                    className={`application-card ${
+                      expandedCard === application.id ? "mb-16" : ""
+                    }`}
+                  >
                     <header className="application-card__header">
                       <img
                         src={Logo}
@@ -212,7 +248,7 @@ export default function YourApplicationsPage() {
 
                     <div className="application__details ">
                       <p className="application__detail mb-8">
-                        Manufacturing   Full time
+                        Manufacturing Full time
                       </p>
                       <p className="application__detail">
                         ${application.minsalary} - ${application.maxsalary}
@@ -220,6 +256,7 @@ export default function YourApplicationsPage() {
                     </div>
                     <div className="application__status">
                       <p className="application__status-time">
+                        <img src={mailIcon} alt="" />
                         <TimeAgo dateString={application.date} />
                       </p>
                       <p className="application__status-review">
@@ -232,13 +269,30 @@ export default function YourApplicationsPage() {
                       expandedCard === application.id ? "show" : ""
                     }`}
                   >
-                    <p className="extra-content__last-updated mb-16">Last Updated on 03/22/21</p>
-                    <h3 className="extra-content__heading mb-8">Professional experience</h3>
-                    <p className="extra-content__mandatory mb-16">{application.professionalexperience}</p>
-                    <h3 className="extra-content__heading mb-8">Why are you interested in working at {application.company}</h3>
-                    <p className="extra-content__optional mb-16">{application.whyareyouinterested}</p>
+                    <p className="extra-content__last-updated mb-16">
+                      Last Updated on 03/22/21
+                    </p>
+                    <h3 className="extra-content__heading mb-8">
+                      Professional experience
+                    </h3>
+                    <p className="extra-content__mandatory mb-16">
+                      {application.professionalexperience}
+                    </p>
+                    <h3 className="extra-content__heading mb-8">
+                      Why are you interested in working at {application.company}
+                    </h3>
+                    <p className="extra-content__optional mb-16">
+                      {application.whyareyouinterested}
+                    </p>
                     <div>
-                      <button className="extra-content__decline-btn" onClick={()=>handleDeclineApplication(application.applicationsid)}>X DECLINE APPLICATION</button>
+                      <button
+                        className="extra-content__decline-btn"
+                        onClick={() =>
+                          handleDeclineApplication(application.applicationsid)
+                        }
+                      >
+                        X DECLINE APPLICATION
+                      </button>
                     </div>
                   </div>
                 </article>

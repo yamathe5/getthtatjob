@@ -5,6 +5,7 @@ import Logo from "../../assets/logo.png";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/auth";
 import { useNavigate } from 'react-router-dom';
+import following from "../../assets/following.png"
 
 
 export default function Following() {
@@ -64,7 +65,9 @@ export default function Following() {
   
 
   function getJobs(data) {
-    return data.filter((item) => item.jobid != null);
+    const newData = data.filter((item) => item.jobid != null);
+    console.log(newData)
+    return newData
   }
   function getCompanys(data) {
     return data.filter((item) => item.companyid != null);
@@ -81,7 +84,7 @@ export default function Following() {
         </header>
         <section className="following-content">
           <p className="following-header__subtitle headline-6 mb-8">
-            Jobs Following
+            {jobs.length} Jobs Following
           </p>
           <div className="following-content__container mb-16">
             {jobs &&
@@ -109,7 +112,7 @@ export default function Following() {
                       </div>
                       <div className="job-card__actions">
                         <button className="job-card__action-button job-card__action-button--follow" onClick={(e) => handleOnClickRemoveFollow(e, item.id, "job")}>
-                          O FOLLOWING
+                        <img src={following} alt="followgin-icon" /> FOLLOWING
                         </button>
                         <button className="job-card__action-button job-card__action-button--see-more on" onClick={() => handleSeeMoreClick(item.jobid)}>
                           SEE MORE
@@ -121,7 +124,7 @@ export default function Following() {
               })}
           </div>
           <p className="following-header__subtitle headline-6 mb-8">
-            Company following
+           {companys.length} Company following
           </p>
           <div className="following-content__container mb-16">
               {companys &&
@@ -148,7 +151,7 @@ export default function Following() {
                       </div>
                       <div className="job-card__actions">
                         <button className="job-card__action-button job-card__action-button--follow" onClick={(e) => handleOnClickRemoveFollow(e, item.id, "company")}>
-                          O FOLLOW
+                        <img src={following} alt="followgin-icon" /> FOLLOWING
                         </button>
                         <button className="job-card__action-button job-card__action-button--see-more">
                           SEE MORE

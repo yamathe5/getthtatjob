@@ -4,6 +4,11 @@ import { useAuth } from "../../contexts/auth";
 import { useLocation } from "react-router-dom";
 import "./sidebar.css";
 
+import searchIcon from "../../assets/search_icon.png"
+import youApplicationsIcon from "../../assets/your_applicatioons_icon.png"
+import profileIcon from "../../assets/user_icon.png"
+import logoutIcon from "../../assets/logout_icon.png"
+import notFollowingIcon from "../../assets/notFollowing.png"
 export default function Sidebar() {
   const { logout } = useAuth();
   const location = useLocation();
@@ -27,7 +32,7 @@ export default function Sidebar() {
               : ""
           }`}
         >
-          O Find that job
+          <img src={searchIcon} alt="searchIcon" /> Find that job
         </Link>
         <Link
           to="/professional/your-applications"
@@ -37,7 +42,7 @@ export default function Sidebar() {
               : ""
           }`}
         >
-          O Your applications
+          <img src={youApplicationsIcon} alt="youApplicationsIcon" /> Your applications
         </Link>
         <Link
           to="/professional/following"
@@ -47,7 +52,7 @@ export default function Sidebar() {
               : ""
           }`}
         >
-          O Following
+          <img src={notFollowingIcon} alt="notFollowingIcon" /> Following
         </Link>
         <Link
           to="/professional/profile"
@@ -57,7 +62,7 @@ export default function Sidebar() {
               : ""
           }`}
         >
-          O Profile
+          <img src={profileIcon} alt="profileIcon" />  Profile
         </Link>
         {/* Implement logout functionality or redirect to login page */}
         <Link
@@ -65,9 +70,35 @@ export default function Sidebar() {
           onClick={() => logout()}
           className="professional-sidebar__link professional-sidebar__link--logout"
         >
-          O Log out
+          <img src={logoutIcon} alt="logoutIcon" /> Log out
         </Link>
       </nav>
+
+      <div className="professional-siderbar__about-me">
+        <p className="mb-12">
+        © 2024 - Get That Job
+        </p>
+        <p className="mb-4">
+        Build with ❤ by:        
+        </p>
+          <a href="https://www.linkedin.com/in/johan-segura/" target="_blank" rel="noreferrer">
+        <p className="mb-12">
+        <i className="fab fa-linkedin"></i> 
+            Johan Segura - yamathe5
+        </p>
+        </a>
+          <a href="https://github.com/yamathe5" target="_blank" rel="noreferrer">
+        <p className="mb-12">
+        <i className="fab fa-github"></i> 
+            Johan Segura - yamathe5
+        </p>
+        </a>
+        <p className="mb-4">
+          Source code:
+        </p>
+        <p className="mb-4">Node.js on REST API</p>
+        <p>React.js Responsive SAP</p>
+      </div>
     </aside>
   );
 }

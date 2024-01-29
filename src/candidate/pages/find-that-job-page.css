@@ -193,7 +193,9 @@ margin-right: 0.8rem;
   color: #616161;
 }
 .job-card__action-button--follow {
-
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
 }
 .job-card__action-button--see-more {
   padding: 8px 16px 8px 16px;
@@ -203,3 +205,8 @@ margin-right: 0.8rem;
   
 }
 
+.button-applied{
+  color: #8E8E8E;
+  background: #E1E2E1;
+  border: none;
+}

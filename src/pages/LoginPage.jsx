@@ -7,8 +7,8 @@ import welcome from "../assets/Welcomeback.png"
 
 export default function LoginPage() {
   const [userType, setUserType] = useState("professional"); // 'professional' o 'company'
-  const [email, setEmail] = useState("Elenora_Lang85@yahoo.com");
-  const [password, setPassword] = useState("fiLL1XmqGis68Ga");
+  const [email, setEmail] = useState("Ernestina21@yahoo.com");
+  const [password, setPassword] = useState("2Az0TRC6gWKRJEk");
   const { login } = useAuth();
 
   // Manejadores para los inputs y el toggle

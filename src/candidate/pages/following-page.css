@@ -138,3 +138,8 @@
   border: 1px solid #f48fb1;
   gap: 8px;
 }
+.button-applied{
+  color: #8E8E8E;
+  background: #E1E2E1;
+  border: none;
+}

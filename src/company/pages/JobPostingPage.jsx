@@ -2,10 +2,13 @@ import { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import "./job-posting-page.css";
 import { useAuth } from "../../contexts/auth";
-
-
+import searchIcon from "../../assets/search_icon.png";
+import closeIcon from "../../assets/cirlce_x_icon.png"
+import closedIcon from "../../assets/closed_icon.png"
 import { useNavigate } from 'react-router-dom';
-
+import openedMailIcon from "../../assets/opened_mail_icon.png"
+import candidatesIcon from "../../assets/candidates_icon.png"
+import candidatesOnTrackIcon from "../../assets/candidates_on_track_icon.png"
 function formateDate(date) {
   const newDate = new Date(date);
 
@@ -176,7 +179,7 @@ export default function JobPostingPage() {
             </div>
           </div>
           <h2 className="job-posting-page__filter__count headline-6 mb-8">
-            Jobs postings found
+            {filteredJobs.length} Jobs postings found
           </h2>
           <article className="job-postings__container">
             {filteredJobs &&
@@ -198,19 +201,25 @@ export default function JobPostingPage() {
                     </div>
 
                     <div className="job-posting__statistics">
-                      <p> {formateDate(item.posteddate)} </p>
+                      <p> <img src={openedMailIcon} alt="openedMailIcon" /> {formateDate(item.posteddate)} </p>
                       <p>
-                        {item.count_candidates} <br />
+                        <div>
+                       <img src={candidatesIcon} alt="candidatesIcon" /> {item.count_candidates} 
+                        </div>
                         Total Candidates
                       </p>
-                      <p>
-                        {item.track} <br /> Candidates on track{" "}
+                      <p >
+                        <div>
+
+                        
+                      <img src={candidatesOnTrackIcon} alt="candidatesOnTrackIcon" />
+                        {item.track} </div> Candidates on track{" "}
                       </p>
                     </div>
 
                     <div className="job-posting__actions">
                       <button className="job-posting__button job-posting__button--show" onClick={()=> handleShowClick(item.id)}>
-                        O SHOW
+                        <img src={searchIcon} alt="" /> SHOW
 
                       </button>
                       <button
@@ -221,8 +230,11 @@ export default function JobPostingPage() {
                             : "job-posting__button--close")
                         }
                         onClick={(e) => handleToggleButton(e, item.id)}
-                      >
-                        {item.close ? "O CLOSED" : "X CLOSE"}
+                      > 
+                      {item.close ? <img src={closedIcon} alt="closedIcon" />  :
+                       <img src={closeIcon} alt="closeIcon" />}
+                      
+                        {item.close ? "CLOSED" : "CLOSE"}
                       </button>
                     </div>
                   </div>

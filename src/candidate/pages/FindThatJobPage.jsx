@@ -5,6 +5,9 @@ import Logo from "../../assets/logo.png";
 import { useAuth } from "../../contexts/auth";
 import { useNavigate } from 'react-router-dom';
 
+import notFollowing from "../../assets/notFollowing.png"
+import following from "../../assets/following.png"
+
 export default function FindThatJobPage() {
   // const [minSalary, setMinSalary] = useState("");
   // const [maxSalary, setMaxSalary] = useState("");
@@ -118,6 +121,7 @@ export default function FindThatJobPage() {
               id="search"
               className="find-job-header__input input mb-8"
               value={searchValue.search}
+              placeholder="manufacturing, sales, swim"
               onChange={(e) => handleSearchChange(e, "search")}
             />
           </div>
@@ -129,7 +133,8 @@ export default function FindThatJobPage() {
               >
                 Category
               </label>
-              <select id="category" className="find-job-filters__select input">
+              <select id="category" placeholder="Select a category" className="find-job-filters__select input">
+
                 <option value="manufacturing">Manufacturing</option>
                 <option value="sales">Sales</option>
                 {/* Add more category options */}
@@ -143,6 +148,7 @@ export default function FindThatJobPage() {
                 Type
               </label>
               <select id="type" value={searchValue.type} onChange={(e)=> handleSearchChange(e, "type")} className="find-job-filters__select input">
+
                 <option value="all">All</option>
                 <option value="full-time">Full Time</option>
                 <option value="part-time">Part Time</option>
@@ -158,7 +164,7 @@ export default function FindThatJobPage() {
               </label>
               <div className="find-job-filters__salary-container">
                 <input
-                  type="number"
+                  type="text"
                   id="minSalary"
                   className="find-job-filters__input find-job-filters__input--min input"
                   value={searchValue.minSalary}
@@ -167,7 +173,7 @@ export default function FindThatJobPage() {
                 />
                 <div></div>
                 <input
-                  type="number"
+                  type="text"
                   id="maxSalary"
                   className="find-job-filters__input find-job-filters__input--max input"
                   value={searchValue.maxSalary}
@@ -178,7 +184,7 @@ export default function FindThatJobPage() {
             </div>
           </div>
         </header>
-        <h3 className="job-cards__title headline-6 mb-8"> Jobs for you</h3>
+        <h3 className="job-cards__title headline-6 mb-8">{filteredJobs.length} jobs for you</h3>
         <section className="job-cards">
           {/* Repite este bloque para cada tarjeta de trabajo */}
           {filteredJobs &&
@@ -203,9 +209,10 @@ export default function FindThatJobPage() {
                   </div>
                   <div className="job-card__actions">
                     <button className="job-card__action-button job-card__action-button--follow" onClick={()=>toggleFollow(item.id, item.following, item.followingid)}>
-                      { item.following ? "FOLLOWING" : "NOT FOLLOWING"}
+                       { item.following ?   <img src={following} alt="followgin-icon" />  : <img src={notFollowing} alt="not-followgin-icon" />  }
+                       { item.following ?    "FOLLOWING" : "FOLLOW"}
                     </button>
-                    <button className="job-card__action-button job-card__action-button--see-more" onClick={() => handleSeeMoreClick(item.id)}>
+                    <button className={`  ${item.applied?  "button-applied" : "" } job-card__action-button job-card__action-button--see-more `} onClick={() => handleSeeMoreClick(item.id)}>
                       {item.applied?  "APPLIED" : "SEE MORE" }
                     </button>
                   </div>

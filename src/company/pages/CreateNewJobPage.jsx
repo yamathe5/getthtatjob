@@ -102,6 +102,7 @@ export default function CreateNewJobPage() {
               type="text"
               id="jobTitle"
               className="create-job-form__input input mb-8"
+              placeholder="Software Engineer"
               value={inputs.title}
               onChange={(e) => handleInputsChange(e, "title")}
             />
@@ -115,6 +116,7 @@ export default function CreateNewJobPage() {
               type="text"
               id="jobCategory"
               className="create-job-form__input input mb-8"
+              placeholder="Select a category"
               value={inputs.category}
               onChange={(e) => handleInputsChange(e, "category")}
             />
@@ -137,13 +139,15 @@ export default function CreateNewJobPage() {
                 id="minsalary"
                 className="create-job-form__input input mb-8"
                 value={inputs.minsalary}
+                placeholder="min"
                 onChange={(e) => handleInputsChange(e, "minsalary")}
-              />
+                />
 
               <div className="imput-salary-container__divider mb-8"></div>
 
               <input
                 type="number"
+                placeholder="max"
                 id="maxsalary"
                 className="create-job-form__input input mb-8"
                 value={inputs.maxsalary}
@@ -166,6 +170,7 @@ export default function CreateNewJobPage() {
               id="jobDescription"
               className="create-job-form__textarea textarea mb-8"
               value={inputs.aboutjob}
+              placeholder="Describe the main functions and characteristics of your job position"
               onChange={(e) => handleInputsChange(e, "aboutjob")}
             ></textarea>
             <label
@@ -178,6 +183,7 @@ export default function CreateNewJobPage() {
               id="mandarotyRequirements"
               className="create-job-form__textarea textarea mb-8"
               value={inputs.mandarotyrequirements}
+              placeholder="List each mandatory requirement in a new line"
               onChange={(e) => handleInputsChange(e, "mandarotyrequirements")}
             ></textarea>
             <label
@@ -189,11 +195,11 @@ export default function CreateNewJobPage() {
             <textarea
               id="optionalRequirements"
               className="create-job-form__textarea textarea mb-8"
+              placeholder="List each optional requirement in a new line"
               value={inputs.optionalrequirements}
               onChange={(e) => handleInputsChange(e, "optionalrequirements")}
             ></textarea>
 
-            {/* Repeat for other fields like Mandatory Requirements, Optional Requirements */}
           </section>
           <button
             type="submit"
